@@ -1,0 +1,3 @@
+---
+# defaults file for provision
+is_vm: false

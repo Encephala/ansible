@@ -1,0 +1,38 @@
+---
+- name: Update packages (Debian/Ubuntu)
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: 3600
+    upgrade: "yes"
+
+- name: Install packages
+  ansible.builtin.apt:
+    name:
+      - sudo
+      - nano
+      - neofetch
+    state: latest
+
+- name: Install QEMU guest agent if VM
+  ansible.builtin.apt:
+    name:
+      - qemu-guest-agent
+    state: latest
+  when: "is_vm | bool"
+  notify: Ensure guest agent enabled
+
+- name: Set hostname for VM if provided
+  ansible.builtin.hostname:
+    name: "{{ hostname }}"
+  when: hostname is defined and is_vm | bool
+
+- name: Set timezone to Amsterdam
+  community.general.timezone:
+    name: Europe/Amsterdam
+
+
+- name: Set Unattended upgrades
+  ansible.builtin.import_role:
+    name: dependencies/hifis.unattended_upgrades
+  vars:
+    unattended_dl_limit: 40000

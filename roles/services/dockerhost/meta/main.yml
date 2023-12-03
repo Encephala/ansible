@@ -1,0 +1,17 @@
+---
+galaxy_info:
+  author: jonathan
+  description: My role to setup a VM for various Docker services
+  license: idk
+  min_ansible_version: "2.9"
+
+  platforms:
+    - name: Debian
+      versions:
+        - all
+
+dependencies:
+  - role: geerlingguy.docker
+    vars:
+      docker_users: "{{ ansible_user }}"
+      docker_install_compose: false

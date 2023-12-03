@@ -1,0 +1,3 @@
+---
+# vars file for roles/gotify_notifier
+gotify_full_url: "{{ gotify_host | mandatory }}/message?token={{ gotify_token | mandatory }}"

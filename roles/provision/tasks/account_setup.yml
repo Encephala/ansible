@@ -1,0 +1,16 @@
+---
+- name: Create group for user
+  ansible.builtin.group:
+    name: "{{ username }}"
+    state: present
+
+- name: Create user {{ username }}
+  ansible.builtin.user:
+    state: present
+    name: "{{ username }}"
+    group: "{{ username }}"
+    groups: sudo
+    append: true
+    shell: /bin/bash
+    password: "{{ userpass | mandatory | password_hash('sha512') }}"
+    update_password: on_create

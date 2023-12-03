@@ -1,0 +1,11 @@
+---
+# vars file for roles/services/dockerhost
+services: [
+  gotify,
+  homepage,
+  pihole,
+  portainer,
+  socket_proxy,
+  vaultwarden,
+  wireguard
+]

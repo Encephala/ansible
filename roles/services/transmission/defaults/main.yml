@@ -1,0 +1,3 @@
+---
+# defaults file for roles/transmission
+transmission_symlink_name: Torrents

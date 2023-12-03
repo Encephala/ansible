@@ -1,0 +1,12 @@
+---
+- name: Ensure python3 is present
+  ansible.builtin.apt:
+    name: python3
+
+- name: Copy support script
+  ansible.builtin.template:
+    src: gotify.py.j2
+    dest: /usr/local/bin/gotify.py
+    mode: "0755"
+    owner: root
+    group: root

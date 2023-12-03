@@ -1,0 +1,9 @@
+#!/bin/bash
+# Script to run gotify.py when transmission finishes downloading a torrent
+# Templated for node '{{ ansible_hostname }}'.
+
+TITLE="Torrent finished"
+MESSAGE="Transmission finished downloading a torrent."
+PRIORITY=3
+
+/usr/bin/gotify.py "${TITLE}" "${MESSAGE}" "${PRIORITY}"

@@ -1,0 +1,21 @@
+---
+# Tasks to copy SSH ID, disable password auth and restart sshd
+# Must be run as root, requires var `username` to be set
+# and `username`'s public key to be the default for the current (local) user
+- name: Copy SSH ID
+  ansible.posix.authorized_key:
+    user: "{{ username }}"
+    key: "{{ lookup('file', '{{ ssh_key_path }}') }}"
+
+- name: Harden SSH
+  ansible.builtin.lineinfile:
+    dest: /etc/ssh/sshd_config
+    regexp: "{{ line.find }}"
+    line: "{{ line.replace }}"
+    validate: "sshd -T -f %s"
+  loop:
+    - { find: '^(# *)?PasswordAuthentication (yes|no)', replace: 'PasswordAuthentication no' }
+    - { find: '^(# *)?PermitRootLogin (yes|no)', replace: 'PermitRootLogin no' }
+  loop_control:
+    loop_var: line
+  notify: Restart sshd

@@ -1,0 +1,31 @@
+#!/usr/bin/env python3
+import sys
+import requests
+
+url = "{{ gotify_full_url }}"
+
+# Grab arguments from stdin
+title = sys.argv[1]
+message = sys.argv[2]
+priority = int(sys.argv[3]) if len(sys.argv) > 3 else 5
+
+# Parse notification message as markdown
+extras = {
+    "client::display": {"contentType": "text/markdown"}
+}
+
+# This makes "\n" actually render as a newline in markdown
+message = message.replace(r"\n", "  \n")
+
+# If a URL to an image was passed as fourth argument, pass it as notification image.
+if len(sys.argv) > 4:
+    extras["client::notification"] = {"bigImageUrl": sys.argv[4]}
+
+json = {
+    "title": title,
+    "message": message,
+    "priority": priority,
+    "extras": extras
+}
+
+requests.post(url, json = json)

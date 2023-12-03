@@ -1,0 +1,14 @@
+---
+galaxy_info:
+  author: jonathan
+  description: Set up a gotify notification
+  license: idk
+  min_ansible_version: "2.9"
+
+  platforms:
+    - name: Debian
+      versions:
+        - all
+
+dependencies:
+  []

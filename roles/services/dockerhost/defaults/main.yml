@@ -1,0 +1,3 @@
+---
+# defaults file for roles/services/dockerhost
+dockerhost_socket_network_name: socket

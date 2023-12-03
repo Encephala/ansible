@@ -1,0 +1,5 @@
+---
+# tasks file for roles/services/postgres
+- name: Run geerlingguy.postgresql
+  ansible.builtin.import_role:
+    name: geerlingguy.postgresql

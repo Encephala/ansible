@@ -1,0 +1,19 @@
+# Compose file generated for node '{{ ansible_hostname }}' by Ansible.
+version: "3"
+
+services:
+  npm:
+    image: "jc21/nginx-proxy-manager:latest"
+
+    container_name: npm
+
+    ports:
+      - "80:80/tcp"
+      - "443:443/tcp"
+      - "{{ npm_management_port }}:81/tcp"
+
+    volumes:
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
+
+    restart: unless-stopped

@@ -1,0 +1,20 @@
+---
+- name: Main
+  hosts: test
+
+  become: true
+
+  vars_files:
+    secrets.yml
+
+  vars:
+    # gotify_token: "{{ gotify_x_token }}"
+    # is_vm: true
+    # hostname: Dockerhost
+
+    # Initial login for containers
+    # ansible_user: root
+    # ansible_ssh_private_key_file: ~/.ssh/root
+
+  roles:
+    - provision

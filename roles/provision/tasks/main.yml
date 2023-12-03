@@ -1,0 +1,7 @@
+---
+- name: Setup
+  ansible.builtin.include_tasks: "{{ item }}"
+  loop:
+    - system_setup.yml
+    - account_setup.yml
+    - ssh_setup.yml

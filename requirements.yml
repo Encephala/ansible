@@ -1,0 +1,13 @@
+---
+# --- This file may well be unmaintained because roles are stored in a relative path anyways ---
+
+# List of required roles
+roles:
+  - name: geerlingguy.docker
+  - name: geerlingguy.firewall
+  - name: geerlingguy.postgresql
+  - name: hifis.unattended_upgrades
+
+# List of required collections
+collections:
+  - name: community.docker

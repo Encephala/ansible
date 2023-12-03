@@ -1,0 +1,52 @@
+---
+# tasks file for roles/services/dockerhost
+- name: Ensure pip is present
+  ansible.builtin.apt:
+    name: pip
+    state: present
+
+- name: Ensure Python dependencies for Docker are present
+  ansible.builtin.pip:
+    name:
+      - docker
+      - PyYAML
+      - docker-compose
+    state: present
+
+- name: Create directories for services
+  ansible.builtin.file:
+    path: "/home/{{ ansible_user }}/{{ item }}"
+    state: directory
+    mode: "0755"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+  loop: "{{ services }}"
+
+- name: Provide docker-compose files
+  ansible.builtin.template:
+    src: "{{ item }}-docker-compose.yml.j2"
+    dest: "/home/{{ ansible_user }}/{{ item }}/docker-compose.yml"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: "0744"
+  loop: "{{ services }}"
+
+- name: Create socket network
+  community.docker.docker_network:
+    name: "{{ dockerhost_socket_network_name }}"
+    driver: bridge
+    state: present
+
+# TODO: Copy config data from backup
+
+- name: Ensure containers are started
+  community.docker.docker_compose:
+    project_src: "/home/{{ ansible_user }}/{{ item }}"
+    state: present
+  loop: "{{ services }}"
+
+- name: Install gotify
+  ansible.builtin.include_role:
+    name: gotify_notifier
+  vars:
+    gotify_token: "{{ gotify_dockerhost_token }}"

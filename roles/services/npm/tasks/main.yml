@@ -1,0 +1,38 @@
+---
+- name: Ensure pip is present
+  ansible.builtin.apt:
+    name: pip
+    state: present
+
+- name: Ensure Python dependencies for Docker are present
+  ansible.builtin.pip:
+    name:
+      - docker
+      - PyYAML
+      - docker-compose
+    state: present
+
+- name: Create NPM directory
+  ansible.builtin.file:
+    path: "{{ npm_docker_path }}"
+    state: directory
+    mode: "0755"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+
+- name: Provide docker-compose file
+  ansible.builtin.template:
+    src: docker-compose.j2
+    dest: "{{ npm_docker_path }}/docker-compose.yml"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: "0744"
+
+- name: Ensure container is started
+  community.docker.docker_compose:
+    project_src: "{{ npm_docker_path }}"
+    state: present
+
+- name: Notify user to set up hosts
+  ansible.builtin.debug:
+    msg: "Navigate to http://{{ ansible_default_ipv4.address }}:{{ npm_management_port }} and set up the hosts."

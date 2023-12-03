@@ -1,0 +1,12 @@
+---
+# handlers file for provision
+- name: Restart sshd
+  ansible.builtin.service:
+    name: sshd
+    state: restarted
+
+- name: Ensure guest agent enabled
+  ansible.builtin.service:
+    name: qemu-guest-agent
+    enabled: true
+    state: started
