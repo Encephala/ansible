@@ -9,8 +9,9 @@
   ansible.builtin.apt:
     name:
       - sudo
-      - nano
       - neofetch
+      - vim
+      - neovim
     state: latest
 
 - name: Install QEMU guest agent if VM
