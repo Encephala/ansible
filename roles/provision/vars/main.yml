@@ -3,4 +3,5 @@
 
 # Username of generic user
 username: jonathan
-ssh_key_path: id_ed25519.pub
+ssh_key: id_ed25519
+ssh_key_pub: id_ed25519.pub

@@ -2,10 +2,23 @@
 # Tasks to copy SSH ID, disable password auth and restart sshd
 # Must be run as root, requires var `username` to be set
 # and `username`'s public key to be the default for the current (local) user
-- name: Copy SSH ID
+- name: Authorise SSH key
   ansible.posix.authorized_key:
     user: "{{ username }}"
-    key: "{{ lookup('file', '{{ ssh_key_path }}') }}"
+    key: "{{ lookup('ansible.builtin.file', '{{ ssh_key_pub }}') }}"
+
+# authorized_key ensures the directory is created
+- name: Copy SSH private key
+  remote_user: "{{ username }}"
+  ansible.builtin.copy:
+    src: "{{ ssh_key }}"
+    # ansible_env.HOME doesn't update when specifying remote_user,
+    # but ansible.builtin.env lookup does
+    dest: "{{ lookup('ansible.builtin.env', 'HOME') }}/.ssh/{{ ssh_key }}"
+    mode: preserve
+    owner: "{{ username }}"
+    group: "{{ username }}"
+
 
 - name: Harden SSH
   ansible.builtin.lineinfile:
