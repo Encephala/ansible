@@ -34,6 +34,6 @@
 
 - name: Set Unattended upgrades
   ansible.builtin.import_role:
-    name: dependencies/hifis.unattended_upgrades
+    name: hifis.unattended_upgrades
   vars:
     unattended_dl_limit: 40000
