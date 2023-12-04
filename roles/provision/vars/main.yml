@@ -1,2 +1,6 @@
 ---
 # vars file for provision
+
+# Username of generic user
+username: jonathan
+ssh_key_path: ~/.ssh/id_rsa.pub

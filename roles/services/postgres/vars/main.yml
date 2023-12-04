@@ -17,6 +17,11 @@ postgresql_users:
   - name: jonathan
     password: "{{ postgresql_db_pass_hash | mandatory }}"
 
+
+# IP range that all servers are in
+ips_servers: "10.0.50.*"
+subnet_servers: "10.0.50.0/24"
+
 postgresql_hba_entries:
   # Role default entries
   - { type: local, database: all, user: postgres, auth_method: peer }
