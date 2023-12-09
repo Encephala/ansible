@@ -12,6 +12,8 @@
       - neofetch
       - vim
       - neovim
+      - curl
+      - htop
     state: latest
 
 - name: Install QEMU guest agent if VM
