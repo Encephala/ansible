@@ -19,7 +19,7 @@
     mode: preserve
     owner: "{{ username }}"
     group: "{{ username }}"
-  when: copy_private_key | default("false") | bool
+  when: copy_private_key | bool
 
 
 - name: Harden SSH
@@ -30,7 +30,7 @@
     validate: "sshd -T -f %s"
   loop:
     - { find: '^(# *)?PasswordAuthentication (yes|no)', replace: 'PasswordAuthentication no' }
-    - { find: '^(# *)?PermitRootLogin (yes|no)', replace: 'PermitRootLogin no' }
+    - { find: '^(# *)?PermitRootLogin (yes|prohibit-password|no)', replace: 'PermitRootLogin no' }
   loop_control:
     loop_var: line
   notify: Restart sshd
