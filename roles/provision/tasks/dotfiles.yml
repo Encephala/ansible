@@ -2,7 +2,7 @@
 # Set up git branch name in PS1 through bashrc
 - name: Git
   block:
-    - name: Copy git config
+    - name: Copy .gitconfig
       remote_user: "{{ username }}"
       ansible.builtin.copy:
         src: git/dotgitconfig
@@ -34,3 +34,41 @@
           export GIT_PS1_SHOWUNTRACKEDFILES=1
           export GIT_PS1_SHOWUPSTREAM=1
           export PS1="${PS1::-3}\[\033[38;5;204m\]\$(__git_ps1)\[\033[00m\]\$ "
+
+- name: Copy .lintr
+  remote_user: "{{ username }}"
+  ansible.builtin.copy:
+    src: R/dotlintr
+    dest: "{{ lookup('ansible.builtin.env', 'HOME') }}/.lintr"
+    owner: "{{ username }}"
+    group: "{{ username }}"
+    mode: 0644
+
+- name: SSH
+  block:
+    - name: Ensure .ssh exists
+      remote_user: "{{ username }}"
+      ansible.builtin.file:
+        dest: "{{ lookup('ansible.builtin.env', 'HOME') }}/.ssh"
+        state: directory
+        owner: "{{ username }}"
+        group: "{{ username }}"
+        mode: 0700
+
+    - name: Copy SSH config
+      remote_user: "{{ username }}"
+      ansible.builtin.copy:
+        src: ssh/config
+        dest: "{{ lookup('ansible.builtin.env', 'HOME') }}/.ssh/config"
+        owner: "{{ username }}"
+        group: "{{ username }}"
+        mode: 0644
+
+- name: Copy .zshrc
+  remote_user: "{{ username }}"
+  ansible.builtin.template:
+    src: zsh/dotzshrc.j2
+    dest: "{{ lookup('ansible.builtin.env', 'HOME') }}/.zshrc"
+    owner: "{{ username }}"
+    group: "{{ username }}"
+    mode: 0644
