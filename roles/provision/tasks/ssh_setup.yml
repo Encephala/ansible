@@ -1,7 +1,8 @@
 ---
 # Tasks to copy SSH ID, disable password auth and restart sshd
 # Must be run as root, requires var `username` to be set
-# and `username`'s public key to be the default for the current (local) user
+# If copy_private_key is true, also copies the private key
+
 - name: Authorise SSH key
   ansible.posix.authorized_key:
     user: "{{ username }}"
@@ -18,6 +19,7 @@
     mode: preserve
     owner: "{{ username }}"
     group: "{{ username }}"
+  when: copy_private_key | default("false") | bool
 
 
 - name: Harden SSH
