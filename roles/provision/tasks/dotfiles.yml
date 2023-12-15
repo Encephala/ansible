@@ -1,0 +1,36 @@
+---
+# Set up git branch name in PS1 through bashrc
+- name: Git
+  block:
+    - name: Copy git config
+      remote_user: "{{ username }}"
+      ansible.builtin.copy:
+        src: git/dotgitconfig
+        dest: "{{ lookup('ansible.builtin.env', 'HOME') }}/.gitconfig"
+        owner: "{{ username }}"
+        group: "{{ username }}"
+        mode: 0644
+
+    - name: Git branch in PS1 - helper files
+      remote_user: "{{ username }}"
+      ansible.builtin.copy:
+        src: git/dotgit/
+        dest: "{{ lookup('ansible.builtin.env', 'HOME') }}/.git/"
+        owner: "{{ username }}"
+        group: "{{ username }}"
+        mode: 0644
+
+    - name: Git branch in PS1 - .bashrc
+      remote_user: "{{ username }}"
+      ansible.builtin.blockinfile:
+        path: "{{ lookup('ansible.builtin.env', 'HOME') }}/.bashrc"
+        block: |
+          # Git stuff
+          . "$HOME/.git/git-completion.bash"
+          . "$HOME/.git/git-prompt.sh"
+
+          export GIT_PS1_SHOWDIRTYSTATE=1
+          export GIT_PS1_SHOWSTASHSTATE=1
+          export GIT_PS1_SHOWUNTRACKEDFILES=1
+          export GIT_PS1_SHOWUPSTREAM=1
+          export PS1="${PS1::-3}\[\033[38;5;204m\]\$(__git_ps1)\[\033[00m\]\$ "

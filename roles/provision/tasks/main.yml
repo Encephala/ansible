@@ -5,3 +5,4 @@
     - system_setup.yml
     - account_setup.yml
     - ssh_setup.yml
+    - dotfiles.yml
