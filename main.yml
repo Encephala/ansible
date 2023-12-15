@@ -1,6 +1,6 @@
 ---
 - name: Main
-  hosts: test
+  hosts: all
 
   become: true
 
@@ -14,7 +14,6 @@
 
     # Initial login for containers
     # ansible_user: root
-    # ansible_ssh_private_key_file: ~/.ssh/root
 
   roles:
     - provision
