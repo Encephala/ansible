@@ -39,3 +39,11 @@
     name: hifis.unattended_upgrades
   vars:
     unattended_dl_limit: 40000
+
+- name: Copy wsl.conf
+  ansible.builtin.copy:
+    src: wsl/wsl.conf
+    dest: /etc/wsl.conf
+    mode: 0644
+    owner: root
+    group: root
