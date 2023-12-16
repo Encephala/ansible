@@ -1,5 +1,15 @@
 ---
 # Set up git branch name in PS1 through bashrc
+- name: Set long bash history
+  remote_user: "{{ username }}"
+  ansible.builtin.lineinfile:
+    path: "{{ lookup('ansible.builtin.env', 'HOME') }}/.bashrc"
+    regexp: "{{ item.find }}"
+    line: "{{ item.line }}"
+  loop:
+    - { find: "^HISTSIZE=*", line: "HISTSIZE=5000" }
+    - { find: "^HISTFILESIZE=*", line: "HISTFILESIZE=10000" }
+
 - name: Git
   block:
     - name: Copy .gitconfig
