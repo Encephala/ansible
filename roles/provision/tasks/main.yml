@@ -1,20 +1,24 @@
 ---
 - name: Include system setup
   ansible.builtin.import_tasks: system_setup.yml
+  become: true
   tags:
     - system
 
 - name: Include account setup
   ansible.builtin.import_tasks: account_setup.yml
+  become: true
   tags:
     - account
 
 - name: Include ssh setup
   ansible.builtin.import_tasks: ssh_setup.yml
+  become: true
   tags:
     - ssh
 
 - name: Include dotfiles setup
   ansible.builtin.import_tasks: dotfiles.yml
+  remote_user: "{{ username }}"
   tags:
     - dotfiles

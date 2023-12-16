@@ -2,6 +2,8 @@
 # defaults file for provision
 is_vm: false
 
+is_wsl: false
+
 # Username of generic user
 username: jonathan
 
