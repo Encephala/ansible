@@ -12,5 +12,5 @@
     groups: sudo
     append: true
     shell: /bin/bash
-    password: "{{ userpass | mandatory | password_hash('sha512') }}"
+    password: "{{ userpass | mandatory | password_hash('sha512') }}" # noqa: jinja[invalid]
     update_password: on_create
