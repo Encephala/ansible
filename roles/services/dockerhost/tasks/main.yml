@@ -15,7 +15,7 @@
 
 - name: Create directories for services
   ansible.builtin.file:
-    path: "/home/{{ ansible_user }}/{{ item }}"
+    path: "{{ ansible_env.HOME }}/{{ item }}"
     state: directory
     mode: "0755"
     owner: "{{ ansible_user }}"
@@ -25,7 +25,7 @@
 - name: Provide docker-compose files
   ansible.builtin.template:
     src: "{{ item }}-docker-compose.yml.j2"
-    dest: "/home/{{ ansible_user }}/{{ item }}/docker-compose.yml"
+    dest: "{{ ansible_env.HOME }}/{{ item }}/docker-compose.yml"
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
     mode: "0744"
@@ -41,7 +41,7 @@
 
 - name: Ensure containers are started
   community.docker.docker_compose:
-    project_src: "/home/{{ ansible_user }}/{{ item }}"
+    project_src: "{{ ansible_env.HOME }}/{{ item }}"
     state: present
   loop: "{{ services }}"
 

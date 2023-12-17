@@ -12,7 +12,7 @@ Must be run as root or using `become`.
 Variables
 ------------
 
-`npm_docker_path=/home/{{ ansible_user }}/npm` may be defined to set directory in which docker-compose file and config will be stored.
+`npm_docker_path={{ ansible_env.HOME }}/npm` may be defined to set directory in which docker-compose file and config will be stored.
 
 `npm_management_port=8080` may be defined to set port of management interface.
 

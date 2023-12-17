@@ -1,6 +1,6 @@
 ---
 # defaults file for npm
 
-npm_docker_path: "/home/{{ ansible_user }}/npm"
+npm_docker_path: "{{ ansible_env.HOME }}/npm"
 
 npm_management_port: "8080"

@@ -24,7 +24,7 @@
     - name: Create symlink to big-store
       ansible.builtin.file:
         src: "/mnt/big-store"
-        dest: "/home/{{ username }}/{{ transmission_symlink_name }}"
+        dest: "{{ ansible_env.HOME }}/{{ transmission_symlink_name }}"
         state: link
         owner: "{{ username }}"
         group: "{{ username }}"
@@ -41,13 +41,13 @@
       ansible.builtin.copy:
         remote_src: true
         src: "/usr/share/applications/transmission-gtk.desktop"
-        dest: "/home/{{ username | mandatory }}/Desktop/"
+        dest: "{{ ansible_env.HOME }}/Desktop/"
         mode: "0755"
 
     - name: Create Transmission config directory
       ansible.builtin.file:
         state: directory
-        path: "/home/{{ username }}/.config/transmission/"
+        path: "{{ ansible_env.HOME }}/.config/transmission/"
         owner: "{{ username }}"
         group: "{{ username }}"
         mode: "0755"
@@ -55,7 +55,7 @@
     - name: Configure Transmission
       ansible.builtin.template:
         src: settings.j2
-        dest: "/home/{{ username }}/.config/transmission/settings.json"
+        dest: "{{ ansible_env.HOME }}/.config/transmission/settings.json"
         owner: "{{ username }}"
         group: "{{ username }}"
         mode: "0600"
@@ -72,7 +72,7 @@
     - name: Copy notification script
       ansible.builtin.template:
         src: script.j2
-        dest: "/home/{{ username }}/notify"
+        dest: "{{ ansible_env.HOME }}/notify"
         mode: "0755"
         owner: "{{ username }}"
         group: "{{ username }}"
