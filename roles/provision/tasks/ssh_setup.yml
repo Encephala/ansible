@@ -16,7 +16,7 @@
     # ansible_env.HOME doesn't update when specifying remote_user,
     # but ansible.builtin.env lookup does
     dest: "{{ lookup('ansible.builtin.env', 'HOME') }}/.ssh/{{ ssh_key }}"
-    mode: 0600
+    mode: "0600"
     owner: "{{ username }}"
     group: "{{ username }}"
   when: copy_private_key | bool

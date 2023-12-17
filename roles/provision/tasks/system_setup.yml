@@ -46,7 +46,7 @@
   ansible.builtin.copy:
     src: wsl/wsl.conf
     dest: /etc/wsl.conf
-    mode: 0644
+    mode: "0644"
     owner: root
     group: root
   when: is_wsl

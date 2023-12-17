@@ -17,7 +17,7 @@
         dest: "{{ lookup('ansible.builtin.env', 'HOME') }}/.bash_aliases"
         owner: "{{ username }}"
         group: "{{ username }}"
-        mode: 0644
+        mode: "0644"
 
 
 - name: Git
@@ -28,7 +28,7 @@
         dest: "{{ lookup('ansible.builtin.env', 'HOME') }}/.gitconfig"
         owner: "{{ username }}"
         group: "{{ username }}"
-        mode: 0644
+        mode: "0644"
 
     - name: Git branch in PS1 - helper files
       ansible.builtin.copy:
@@ -36,7 +36,7 @@
         dest: "{{ lookup('ansible.builtin.env', 'HOME') }}/.git/"
         owner: "{{ username }}"
         group: "{{ username }}"
-        mode: 0644
+        mode: "0644"
 
     - name: Git branch in PS1 - .bashrc
       ansible.builtin.blockinfile:
@@ -58,7 +58,7 @@
     dest: "{{ lookup('ansible.builtin.env', 'HOME') }}/.lintr"
     owner: "{{ username }}"
     group: "{{ username }}"
-    mode: 0644
+    mode: "0644"
 
 - name: SSH
   block:
@@ -68,7 +68,7 @@
         state: directory
         owner: "{{ username }}"
         group: "{{ username }}"
-        mode: 0700
+        mode: "0700"
 
     - name: Copy SSH config
       ansible.builtin.copy:
@@ -76,7 +76,7 @@
         dest: "{{ lookup('ansible.builtin.env', 'HOME') }}/.ssh/config"
         owner: "{{ username }}"
         group: "{{ username }}"
-        mode: 0644
+        mode: "0644"
 
 - name: Copy .zshrc
   ansible.builtin.template:
@@ -84,4 +84,4 @@
     dest: "{{ lookup('ansible.builtin.env', 'HOME') }}/.zshrc"
     owner: "{{ username }}"
     group: "{{ username }}"
-    mode: 0644
+    mode: "0644"
