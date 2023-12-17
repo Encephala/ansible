@@ -1,2 +1,8 @@
+exclude_paths:
+  # Don't scan playbooks as those don't work due to password file
+  - main.yml
+  - playbooks/
+  - roles/dependencies/
+
 skip_list:
   - "403"
