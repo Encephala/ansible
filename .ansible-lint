@@ -3,6 +3,7 @@ exclude_paths:
   - main.yml
   - playbooks/
   - roles/dependencies/
+  - .github/
 
 skip_list:
   - "403"
