@@ -1,3 +1,7 @@
 {
-    "ansible.python.interpreterPath": "/bin/python3"
+    "ansible.python.interpreterPath": "/bin/python3",
+    "files.associations": {
+        "*.yml": "ansible"
+    },
+    "ansible.validation.lint.arguments": "-x yaml[line-length]"
 }
