@@ -12,4 +12,4 @@ jobs:
         run: sudo apt-get install ansible-lint -y
 
       - name: Run ansible-lint
-        run: ansible-lint roles -x yaml[line-length] 2>&1 >> $GITHUB_STEP_SUMMARY
+        run: ansible-lint -x yaml[line-length] 2>&1 >> $GITHUB_STEP_SUMMARY
