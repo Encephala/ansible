@@ -23,7 +23,7 @@
     name:
       - qemu-guest-agent
     state: present
-  when: "is_vm | bool"
+  when: is_vm | bool
   notify: Ensure guest agent enabled
 
 - name: Set hostname for VM if provided
