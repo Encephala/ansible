@@ -4,6 +4,3 @@ exclude_paths:
   - playbooks/
   - roles/dependencies/
   - .github/
-
-skip_list:
-  - "403"

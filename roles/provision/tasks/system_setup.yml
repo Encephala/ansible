@@ -16,13 +16,13 @@
       - htop
       - fzf
       - bc
-    state: latest
+    state: present
 
 - name: Install QEMU guest agent if VM
   ansible.builtin.apt:
     name:
       - qemu-guest-agent
-    state: latest
+    state: present
   when: "is_vm | bool"
   notify: Ensure guest agent enabled
 
