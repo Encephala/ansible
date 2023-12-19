@@ -3,5 +3,4 @@
     "files.associations": {
         "*.yml": "ansible"
     },
-    "ansible.validation.lint.arguments": "-x yaml[line-length]"
 }
