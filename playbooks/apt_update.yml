@@ -3,6 +3,9 @@
   hosts: VM, container
   become: true
 
+  vars_files:
+    - ../secrets.yml
+
   pre_tasks:
     - name: Ensure Debian or Ubuntu
       ansible.builtin.fail:
