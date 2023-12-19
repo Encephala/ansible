@@ -10,3 +10,8 @@
     name: qemu-guest-agent
     enabled: true
     state: started
+
+- name: Reboot required
+  ansible.builtin.debug:
+    msg: "Reboot required for {{ inventory_hostname }}"
+  when: reboot_required.stat.exists

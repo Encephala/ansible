@@ -31,6 +31,3 @@
       ansible.builtin.reboot:
         reboot_timeout: 60
       when: reboot_required.stat.exists
-
-
-  # TODO: reboot als nodig
