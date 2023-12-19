@@ -10,7 +10,6 @@
     name:
       - sudo
       - neofetch
-      - vim
       - neovim
       - curl
       - htop
