@@ -13,5 +13,5 @@ galaxy_info:
 dependencies:
   - role: geerlingguy.docker
     vars:
-      docker_users: "{{ ansible_user }}"
+      docker_users: "{{ ansible_user_id }}"
       docker_install_compose: false

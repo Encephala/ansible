@@ -19,8 +19,8 @@
 
 - name: Update `username` if not root
   ansible.builtin.set_fact:
-    username: "{{ ansible_user }}"
-  when: ansible_user != "root"
+    username: "{{ ansible_user_id }}"
+  when: ansible_user_id != "root"
   tags:
     - always
 

@@ -17,15 +17,15 @@
     path: "{{ npm_docker_path }}"
     state: directory
     mode: "0755"
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_user }}"
+    owner: "{{ ansible_user_id }}"
+    group: "{{ ansible_user_id }}"
 
 - name: Provide docker-compose file
   ansible.builtin.template:
     src: docker-compose.j2
     dest: "{{ npm_docker_path }}/docker-compose.yml"
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_user }}"
+    owner: "{{ ansible_user_id }}"
+    group: "{{ ansible_user_id }}"
     mode: "0744"
 
 - name: Ensure container is started

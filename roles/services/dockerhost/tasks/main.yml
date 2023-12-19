@@ -18,16 +18,16 @@
     path: "{{ ansible_env.HOME }}/{{ item }}"
     state: directory
     mode: "0755"
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_user }}"
+    owner: "{{ ansible_user_id }}"
+    group: "{{ ansible_user_id }}"
   loop: "{{ services }}"
 
 - name: Provide docker-compose files
   ansible.builtin.template:
     src: "{{ item }}-docker-compose.yml.j2"
     dest: "{{ ansible_env.HOME }}/{{ item }}/docker-compose.yml"
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_user }}"
+    owner: "{{ ansible_user_id }}"
+    group: "{{ ansible_user_id }}"
     mode: "0744"
   loop: "{{ services }}"
 
