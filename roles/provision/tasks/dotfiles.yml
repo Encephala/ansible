@@ -50,8 +50,8 @@
           export GIT_PS1_SHOWSTASHSTATE=1
           export GIT_PS1_SHOWUNTRACKEDFILES=1
           export GIT_PS1_SHOWUPSTREAM=1
-          export PS1="\[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u:\[\033[01;34m\]\w\[\033[38;5;204m\]\$(__git_ps1)\[\033[01;34m\]\n>\[\033[00m\] "
-          export PS2="\[\033[38;5;204m\]>\[\033[00m\] "
+          export PS1="\[\e[01;32m\A \[\e[01;34m\]\w\[\e[38;5;204m\]\$(__git_ps1)\n\[\e[01;32m\]>\[\e[00m\] "
+          export PS2="\[\e[38;5;204m\]>\[\e[00m\] "
 
 - name: Copy .lintr
   ansible.builtin.copy:
