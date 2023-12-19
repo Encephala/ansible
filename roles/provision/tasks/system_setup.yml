@@ -11,6 +11,7 @@
       - sudo
       - neofetch
       - neovim
+      - git
       - curl
       - htop
       - fzf
