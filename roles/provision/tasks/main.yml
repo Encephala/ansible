@@ -11,9 +11,31 @@
   tags:
     - account
 
+- name: Retrieve passwd information
+  ansible.builtin.getent:
+    database: passwd
+  tags:
+    - always
+
+- name: Update `username` if not root
+  ansible.builtin.set_fact:
+    username: "{{ ansible_user }}"
+  when: ansible_user != "root"
+  tags:
+    - always
+
+- name: Set user and group id
+  ansible.builtin.set_fact:
+    uid: "{{ getent_passwd[username].1 }}"
+    gid: "{{ getent_passwd[username].2 }}"
+    home: "{{ getent_passwd[username].4 }}"
+  tags:
+    - always
+
+
 - name: Include ssh setup
   ansible.builtin.import_tasks: ssh_setup.yml
-  become: true
+  remote_user: "{{ username }}"
   tags:
     - ssh
 

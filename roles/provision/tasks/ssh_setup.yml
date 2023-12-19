@@ -5,24 +5,22 @@
 
 - name: Authorise SSH key
   ansible.posix.authorized_key:
-    user: "{{ username }}"
+    user: "{{ ansible_user }}"
     key: "{{ lookup('ansible.builtin.file', 'ssh/{{ ssh_key_pub }}') }}"
 
 # authorized_key ensures the directory is created
 - name: Copy SSH private key
-  remote_user: "{{ username }}"
   ansible.builtin.copy:
     src: "ssh/{{ ssh_key }}"
-    # ansible_env.HOME doesn't update when specifying remote_user,
-    # but ansible.builtin.env lookup does
-    dest: "{{ lookup('ansible.builtin.env', 'HOME') }}/.ssh/{{ ssh_key }}"
+    dest: "{{ home }}/.ssh/{{ ssh_key }}"
     mode: "0600"
-    owner: "{{ username }}"
-    group: "{{ username }}"
+    owner: "{{ uid }}"
+    group: "{{ gid }}"
   when: copy_private_key | bool
 
 
 - name: Harden SSH
+  become: true
   ansible.builtin.lineinfile:
     dest: /etc/ssh/sshd_config
     regexp: "{{ line.find }}"

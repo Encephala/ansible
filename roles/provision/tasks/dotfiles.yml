@@ -4,7 +4,7 @@
   block:
     - name: Set long bash history
       ansible.builtin.lineinfile:
-        path: "{{ lookup('ansible.builtin.env', 'HOME') }}/.bashrc"
+        path: "{{ home }}/.bashrc"
         regexp: "{{ item.find }}"
         line: "{{ item.line }}"
       loop:
@@ -14,9 +14,9 @@
     - name: Add aliases
       ansible.builtin.copy:
         src: bash/dotbash_aliases
-        dest: "{{ lookup('ansible.builtin.env', 'HOME') }}/.bash_aliases"
-        owner: "{{ username }}"
-        group: "{{ username }}"
+        dest: "{{ home }}/.bash_aliases"
+        owner: "{{ uid }}"
+        group: "{{ gid }}"
         mode: "0644"
 
 
@@ -25,22 +25,22 @@
     - name: Copy .gitconfig
       ansible.builtin.copy:
         src: git/dotgitconfig
-        dest: "{{ lookup('ansible.builtin.env', 'HOME') }}/.gitconfig"
-        owner: "{{ username }}"
-        group: "{{ username }}"
+        dest: "{{ home }}/.gitconfig"
+        owner: "{{ uid }}"
+        group: "{{ gid }}"
         mode: "0644"
 
     - name: Git branch in PS1 - helper files
       ansible.builtin.copy:
         src: git/dotgit/
-        dest: "{{ lookup('ansible.builtin.env', 'HOME') }}/.git/"
-        owner: "{{ username }}"
-        group: "{{ username }}"
+        dest: "{{ home }}/.git/"
+        owner: "{{ uid }}"
+        group: "{{ gid }}"
         mode: "0644"
 
     - name: Git branch in PS1 - .bashrc
       ansible.builtin.blockinfile:
-        path: "{{ lookup('ansible.builtin.env', 'HOME') }}/.bashrc"
+        path: "{{ home }}/.bashrc"
         block: |
           # Git stuff
           . "$HOME/.git/git-completion.bash"
@@ -56,33 +56,33 @@
 - name: Copy .lintr
   ansible.builtin.copy:
     src: R/dotlintr
-    dest: "{{ lookup('ansible.builtin.env', 'HOME') }}/.lintr"
-    owner: "{{ username }}"
-    group: "{{ username }}"
+    dest: "{{ home }}/.lintr"
+    owner: "{{ uid }}"
+    group: "{{ gid }}"
     mode: "0644"
 
 - name: SSH
   block:
     - name: Ensure .ssh exists
       ansible.builtin.file:
-        dest: "{{ lookup('ansible.builtin.env', 'HOME') }}/.ssh"
+        dest: "{{ home }}/.ssh"
         state: directory
-        owner: "{{ username }}"
-        group: "{{ username }}"
+        owner: "{{ uid }}"
+        group: "{{ gid }}"
         mode: "0700"
 
     - name: Copy SSH config
       ansible.builtin.copy:
         src: ssh/config
-        dest: "{{ lookup('ansible.builtin.env', 'HOME') }}/.ssh/config"
-        owner: "{{ username }}"
-        group: "{{ username }}"
+        dest: "{{ home }}/.ssh/config"
+        owner: "{{ uid }}"
+        group: "{{ gid }}"
         mode: "0644"
 
 - name: Copy .zshrc
   ansible.builtin.template:
     src: zsh/dotzshrc.j2
-    dest: "{{ lookup('ansible.builtin.env', 'HOME') }}/.zshrc"
-    owner: "{{ username }}"
-    group: "{{ username }}"
+    dest: "{{ home }}/.zshrc"
+    owner: "{{ uid }}"
+    group: "{{ gid }}"
     mode: "0644"
