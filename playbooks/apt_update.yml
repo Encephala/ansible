@@ -3,18 +3,31 @@
   hosts: VM, container
   become: true
 
+  pre_tasks:
+    - name: Ensure Debian or Ubuntu
+      ansible.builtin.fail:
+        msg: "This playbook only works on Debian or Ubuntu"
+      when: ansible_distribution != "Debian" and ansible_distribution != "Ubuntu"
+
   tasks:
     - name: Update
       ansible.builtin.apt:
         update_cache: true
         cache_valid_time: 3600
 
-      when: ansible_distribution == "Debian" or ansible_distribution == "Ubuntu"
-
     - name: Upgrade
       ansible.builtin.apt:
         upgrade: full
 
-      when: ansible_distribution == "Debian" or ansible_distribution == "Ubuntu"
+    - name: Check if reboot required
+      ansible.builtin.stat:
+        path: /var/run/reboot-required
+      register: reboot_required
+
+    - name: Reboot if required
+      ansible.builtin.reboot:
+        reboot_timeout: 60
+      when: reboot_required.stat.exists
+
 
   # TODO: reboot als nodig

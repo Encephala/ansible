@@ -3,7 +3,7 @@
   ansible.builtin.apt:
     update_cache: true
     cache_valid_time: 3600
-    upgrade: "yes"
+    upgrade: full
 
 - name: Install packages
   ansible.builtin.apt:
