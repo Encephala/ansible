@@ -24,7 +24,7 @@
     - name: Create symlink to big-store
       ansible.builtin.file:
         src: "/mnt/big-store"
-        dest: "{{ ansible_env.HOME }}/{{ transmission_symlink_name }}"
+        dest: "{{ ansible_env.HOME }}/{{ big_store_symlink_name }}"
         state: link
         owner: "{{ username }}"
         group: "{{ username }}"

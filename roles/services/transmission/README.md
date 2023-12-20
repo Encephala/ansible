@@ -8,7 +8,7 @@ Installs `transmission-gtk`, mounts `/big-store/transmission` and creates a symb
 Variables
 ------------
 
-`transmission_symlink_name=Torrent`.
+`big_store_symlink_name=Torrent`.
 
 Requirements
 ------------
