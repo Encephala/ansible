@@ -87,7 +87,3 @@
       - "22"
       - "8080" # Allow RPC over TCP
       - "51413" # Allow torrent peer connections
-    firewall_output_disallowed_tcp_ports:
-      - "1234"
-    firewall_output_disallowed_udp_ports:
-      - "5678"
