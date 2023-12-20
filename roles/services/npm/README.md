@@ -23,5 +23,4 @@ The collection `community.docker` and role `geerlingguy.docker`.
 
 Todo
 ------------
-- Does this set things up in root directory?
 - Set up template files for config

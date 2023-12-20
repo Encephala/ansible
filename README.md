@@ -6,7 +6,7 @@ Vault password managed by `vault_pass.py` through the [Bitwarden CLI](https://bi
 
 Only work on Debian(-based) systems.
 
-Reminder dependencies are installed via `ansible-galaxy install -r requirements.yaml`
+Reminder dependencies are installed via `ansible-galaxy install -r requirements.yaml`.
 
 
 ## Roles

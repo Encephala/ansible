@@ -3,12 +3,12 @@ dockerhost
 
 Sets up VM as a host for various docker applications
 
-
-
 Variables
 ------------
 
 `dockerhost_socket_network_name` is the name of the network in which the Docker socket proxy lives
+
+`services` is a list of the names of each service you want to run. A corresponding compose file should exist in the templates dir.
 
 Requirements
 ------------
@@ -23,5 +23,5 @@ Role `geerlingguy.docker` must be present.
 Todo
 ------------
 
-- Config directories overzetten
-- cron job voor backup als root, notification als jonathan
+- Copy config directories
+- cron job voor backup ass `root`, notification as `username`

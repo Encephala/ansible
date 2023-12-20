@@ -1,8 +1,8 @@
 Postgres
 =========
+
 Role to set a server up as a Postgres database.
-
-
+Not actually useful, just for playing around so far.
 
 Requirements
 ------------

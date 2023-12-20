@@ -3,6 +3,8 @@ transmission
 
 Sets up transmission VM.
 
+Currently majorly outdated as I don't use NFS anymore.
+
 Installs `transmission-gtk`, mounts `/big-store/transmission` and creates a symbolic link to the mount in the user's home directory.
 
 Variables
