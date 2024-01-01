@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """
 Vault password script for use with Ansible
 
@@ -34,9 +34,13 @@ vault_id = parser.parse_args().vault_id
 status = json.loads(run_command("bw status", stdout = PIPE).stdout)["status"]
 
 if status == BW_RESP_UNATH:
-    sys.stderr.write("Log in to Vaultwarden:\n")
-    sys.stderr.flush()
-    response = run_command("bw login jonathan_rietveld@hotmail.com", stdout = PIPE).stdout.decode()
+    # Write to stderr because Ansible expects
+    # only the password to be written to stdout
+    print("Log in to Vaultwarden:", file = sys.stderr)
+
+    # We lose pretty formatting with stdout = PIPE,
+    # but it's the only way to capture stdout
+    response = run_command("bw login", stdout = PIPE).stdout.decode()
 
     # If logging in failed, exit
     if not(response.split("\n")[0] == BW_RESP_LOGGED_IN):
@@ -44,11 +48,8 @@ if status == BW_RESP_UNATH:
 
 
 # Get the password
-sys.stderr.write("Unlock Vaultwarden:\n")
-sys.stderr.flush()
-passwd = run_command(f"bw get password { vault_id }", stdout = PIPE).stdout.decode()
+print("Unlock Vaultwarden:", file = sys.stderr)
 
+# This prints the password to stdout
+run_command(f"bw get password {vault_id}")
 
-# Write the password to stdout
-sys.stdout.write(passwd)
-exit(0)
