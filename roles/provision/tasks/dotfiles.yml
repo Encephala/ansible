@@ -20,6 +20,7 @@
 
 
 - name: Bash
+  when: ansible_user_shell == "/bin/bash"
   block:
     - name: Set long bash history
       ansible.builtin.lineinfile:
