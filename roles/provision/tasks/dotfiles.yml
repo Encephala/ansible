@@ -10,7 +10,7 @@
 
 - name: Clone kickstart.nvim
   ansible.builtin.git:
-    repo: "https://github.com/nvim-lua/kickstart.nvim.git"
+    repo: "https://github.com/encephala/kickstart.nvim.git"
     dest: "{{ home }}/.config/nvim"
 
 - name: Run kickstart.nvim setup
