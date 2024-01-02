@@ -28,13 +28,28 @@
   notify: Reboot required
   when: reboot_required.stat.exists
 
-- name: Install Neovim by appimage
+- name: Download Neovim appimage
   ansible.builtin.get_url:
     url: https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
-    dest: /usr/local/bin/nvim
+    dest: /tmp/nvim.appimage
     mode: "0755"
     owner: root
     group: root
+
+- name: Install Neovim
+  ansible.builtin.command:
+    cmd: "{{ item }}"
+    creates: /opt/nvim
+    chdir: /tmp
+  loop:
+    - ./nvim.appimage --appimage-extract
+    - mv ./squashfs-root /opt/nvim
+
+- name: Add Neovim to PATH
+  ansible.builtin.file:
+    src: /opt/nvim/AppRun
+    dest: /usr/local/bin/nvim
+    state: link
 
 - name: Symlink Neovim to vim
   ansible.builtin.file:
