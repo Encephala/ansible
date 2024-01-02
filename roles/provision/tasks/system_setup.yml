@@ -10,7 +10,6 @@
     name:
       - sudo
       - neofetch
-      - neovim
       - git
       - curl
       - htop
@@ -28,6 +27,20 @@
   changed_when: true
   notify: Reboot required
   when: reboot_required.stat.exists
+
+- name: Install Neovim by appimage
+  ansible.builtin.get_url:
+    url: https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
+    dest: /usr/local/bin/nvim
+    mode: "0755"
+    owner: root
+    group: root
+
+- name: Symlink Neovim to vim
+  ansible.builtin.file:
+    src: /usr/local/bin/nvim
+    dest: /usr/local/bin/vim
+    state: link
 
 - name: Install QEMU guest agent if VM
   ansible.builtin.apt:

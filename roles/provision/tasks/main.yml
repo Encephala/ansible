@@ -11,6 +11,7 @@
   tags:
     - account
 
+
 - name: Retrieve passwd information
   ansible.builtin.getent:
     database: passwd

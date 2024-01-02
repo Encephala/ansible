@@ -1,5 +1,24 @@
 ---
 # Set up git branch name in PS1 through bashrc
+- name: Ensure .config exists in home
+  ansible.builtin.file:
+    dest: "{{ home }}/.config"
+    state: directory
+    owner: "{{ uid }}"
+    group: "{{ gid }}"
+    mode: "0755"
+
+- name: Clone kickstart.nvim
+  ansible.builtin.git:
+    repo: "https://github.com/nvim-lua/kickstart.nvim.git"
+    dest: "{{ home }}/.config/nvim"
+
+- name: Run kickstart.nvim setup
+  ansible.builtin.command:
+    cmd: nvim --headless "+Lazy! sync" +qa
+    creates: "{{ home }}/.local/share/nvim/"
+
+
 - name: Bash
   block:
     - name: Set long bash history
