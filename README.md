@@ -16,3 +16,7 @@ Reminder dependencies are installed via `ansible-galaxy install -r requirements.
     - These aren't great (^:
     - Perhaps not much point in setting up a service if I don't have the persistent volumes stored
 
+## TODO
+
+- Separate provision into server and desktop
+
