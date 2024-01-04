@@ -16,6 +16,7 @@
       - fzf
       - bc
       - gcc
+      - npm
     state: present
 
 
