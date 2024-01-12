@@ -16,6 +16,10 @@
 
 
   tasks:
+    - name: Ensure unzip is present
+      ansible.builtin.apt:
+        name: unzip
+
     - name: Download BW
       ansible.builtin.get_url:
         url: https://vault.bitwarden.com/download/?app=cli&platform=linux
