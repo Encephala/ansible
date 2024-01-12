@@ -1,0 +1,29 @@
+---
+- name: Install BitWarden CLI
+  hosts: localhost
+  become: true
+
+  pre_tasks:
+    - name: Ensure Debian or Ubuntu
+      ansible.builtin.fail:
+        msg: "This playbook only works on Debian or Ubuntu"
+      when: ansible_distribution != "Debian" and ansible_distribution != "Ubuntu"
+
+    - name: APT Update
+      ansible.builtin.apt:
+        update_cache: true
+        cache_valid_time: 3600
+
+
+  tasks:
+    - name: Download BW
+      ansible.builtin.get_url:
+        url: https://vault.bitwarden.com/download/?app=cli&platform=linux
+        dest: /tmp/bw.zip
+
+    - name: Unzip
+      ansible.builtin.unarchive:
+        src: /tmp/bw.zip
+        dest: /usr/local/bin/
+        mode: "0755"
+
