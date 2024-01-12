@@ -17,8 +17,16 @@
       - bc
       - gcc
       - npm
+      - r-base
     state: present
 
+# TODO: This doesn't make sense, NVim gets installed globally,
+# but relies on rust which gets installed for the {{ username }}
+- name: Run rustup
+  ansible.builtin.shell: curl https://sh.rustup.rs -sSf | sh -s -- -y
+  args:
+    warn: false
+  remote_user: "{{ username }}"
 
 - name: Download Neovim appimage
   ansible.builtin.get_url:
