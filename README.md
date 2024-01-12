@@ -17,6 +17,7 @@ Reminder dependencies are installed via `ansible-galaxy install -r requirements.
     - Perhaps not much point in setting up a service if I don't have the persistent volumes stored
 
 ## TODO
-
+- Fix rustup install
+- Fix neovim dependencies (`python3 venv`)
 - Separate provision into server and desktop
 
