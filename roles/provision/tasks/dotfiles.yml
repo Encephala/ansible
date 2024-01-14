@@ -12,6 +12,8 @@
   ansible.builtin.git:
     repo: "https://github.com/encephala/kickstart.nvim.git"
     dest: "{{ home }}/.config/nvim"
+  become: true
+  become_user: "{{ username }}"
 
 - name: Run kickstart.nvim setup
   ansible.builtin.command:
