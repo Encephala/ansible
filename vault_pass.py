@@ -36,7 +36,7 @@ status = json.loads(run_command("bw status", stdout = PIPE).stdout)["status"]
 if status == BW_RESP_UNATH:
     # Write to stderr because Ansible expects
     # only the password to be written to stdout
-    print("Log in to Vaultwarden:", file = sys.stderr)
+    print("Log in to Bitwarden:", file = sys.stderr)
 
     # We lose pretty formatting with stdout = PIPE,
     # but it's the only way to capture stdout
@@ -48,7 +48,7 @@ if status == BW_RESP_UNATH:
 
 
 # Get the password
-print("Unlock Vaultwarden:", file = sys.stderr)
+print("Unlock Bitwarden:", file = sys.stderr)
 
 # This prints the password to stdout
 run_command(f"bw get password {vault_id}")
