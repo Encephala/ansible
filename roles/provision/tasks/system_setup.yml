@@ -15,10 +15,12 @@
       - htop
       - fzf
       - bc
-      - gcc
-      - npm
-      - r-base
-      - luarocks
+      - gcc # For vim treesitter
+      - npm # For many vim LSPs
+      - r-base # Also for R LSP
+      - libxml2 # For R LSP
+      - luarocks # For lua LSP
+      - python3-venv # For some vim LSPs
     state: present
 
 # TODO: This doesn't make sense, NVim gets installed globally,
