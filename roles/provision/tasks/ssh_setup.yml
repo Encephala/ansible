@@ -6,7 +6,9 @@
 - name: Authorise SSH key
   ansible.posix.authorized_key:
     user: "{{ username }}"
-    key: "{{ lookup('ansible.builtin.file', 'ssh/{{ ssh_key_pub }}') }}"
+    key: "{{ lookup('ansible.builtin.file', 'ssh/' + filename) }}"
+  vars:
+    filename: "{{ lookup('ansible.builtin.vars', 'ssh_key_pub') }}"
 
 # authorized_key ensures the directory is created
 - name: Copy SSH private key
