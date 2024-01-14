@@ -7,3 +7,5 @@ exclude_paths:
 
 skip_list:
   - latest
+
+profile: shared
