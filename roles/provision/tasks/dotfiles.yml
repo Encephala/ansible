@@ -141,7 +141,7 @@
 
     - name: Copy yamllint config
       ansible.builtin.copy:
-        src: yamlling/config
+        src: yamllint/config
         dest: "{{ home }}/.config/yamllint"
         owner: "{{ uid }}"
         group: "{{ gid }}"
