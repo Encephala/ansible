@@ -3,6 +3,12 @@
   hosts: localhost
   become: true
 
+
+  vars_prompt:
+    - name: bw_server_url
+      private: false
+      prompt: "What is the URL of the Bitwarden server?"
+
   pre_tasks:
     - name: Ensure Debian or Ubuntu
       ansible.builtin.fail:
@@ -31,3 +37,6 @@
         dest: /usr/local/bin/
         mode: "0755"
 
+    - name: Configure server
+      ansible.builtin.command: bw config server "{{ bw_server_url }}"
+      become: false
