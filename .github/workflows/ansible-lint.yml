@@ -11,8 +11,11 @@ jobs:
       - name: Install pip
         run: sudo apt-get install pipx -y
 
+      - name: Install ansible
+        run: pipx install --include-deps ansible
+
       - name: Install ansible-lint
-        run: pipx install --include-deps ansible-lint
+        run: pipx install ansible-lint
 
       - name: Add pip bin to path
         run: echo "$HOME/.local/bin" >> $GITHUB_PATH
