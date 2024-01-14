@@ -10,7 +10,7 @@
     # is_vm: true
     # is_wsl: true
     # hostname: Dockerhost
-
+    ansible_user: root
 
   roles:
     - provision
