@@ -34,9 +34,11 @@ vault_id = parser.parse_args().vault_id
 status = json.loads(run_command("bw status", stdout = PIPE).stdout)["status"]
 
 if status == BW_RESP_UNATH:
+    server_url = run_command("bw config server", stdout = PIPE).stdout.decode()
+
     # Write to stderr because Ansible expects
     # only the password to be written to stdout
-    print("Log in to Bitwarden:", file = sys.stderr)
+    print(f"Log in to Bitwarden: ({server_url})", file = sys.stderr)
 
     # We lose pretty formatting with stdout = PIPE,
     # but it's the only way to capture stdout
