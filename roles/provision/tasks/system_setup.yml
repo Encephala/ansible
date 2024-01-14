@@ -80,6 +80,9 @@
     name: hifis.unattended_upgrades
   vars:
     unattended_dl_limit: 40000
+  tags:
+    # Because unattended_upgrades doesn't use its full name as var prefix
+    - skip_ansible_lint
 
 - name: Copy wsl.conf
   ansible.builtin.copy:
