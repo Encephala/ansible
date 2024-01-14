@@ -110,3 +110,21 @@
     owner: "{{ uid }}"
     group: "{{ gid }}"
     mode: "0644"
+
+- name: Markdown Lint
+  block:
+    - name: Copy .mdlrc
+      ansible.builtin.copy:
+        src: mdlint/.mdlrc
+        dest: "{{ home }}/.mdlrc"
+        owner: "{{ uid }}"
+        group: "{{ gid }}"
+        mode: "0644"
+
+    - name: Copy mdlint style files
+      ansible.builtin.copy:
+        src: mdlint/.mdlstyle.rb
+        dest: "{{ home }}/.mdlstyle.rb"
+        owner: "{{ uid }}"
+        group: "{{ gid }}"
+        mode: "0644"
