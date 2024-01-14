@@ -128,3 +128,21 @@
         owner: "{{ uid }}"
         group: "{{ gid }}"
         mode: "0644"
+
+- name: Yamllint config
+  block:
+    - name: Ensure yamllint config dir exists
+      ansible.builtin.file:
+        path: "{{ home }}/yamllint"
+        state: directory
+        owner: "{{ uid }}"
+        group: "{{ gid }}"
+        mode: "0755"
+
+    - name: Copy yamllint config
+      ansible.builtin.copy:
+        src: yamlling/config
+        dest: "{{ home }}/.config/yamllint"
+        owner: "{{ uid }}"
+        group: "{{ gid }}"
+        mode: "0644"
