@@ -8,6 +8,6 @@ exclude_paths:
   - secrets.yml
 
 skip_list:
-  - latest
+  - git-latest
 
 profile: shared
