@@ -5,6 +5,7 @@ exclude_paths:
   - playbooks/
   - roles/dependencies/
   - .github/
+  - secrets.yml
 
 skip_list:
   - latest
