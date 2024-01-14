@@ -7,13 +7,13 @@ Each part of that can be done separately by specifying the appropriate tag.
 Variables
 ------------
 
-`username`, `userpass` must be defined.
+`provision_username`, `provision_userpass` must be defined.
 
-`is_vm` may be defined as true to install qemu guest agent.
+`provision_is_vm` may be defined as true to install qemu guest agent.
 
-`is_wsl` may be defined to set WSL to use systemd.
+`provision_is_desktop` may be defined to configure WSL and ignore server-side dependencies
 
-`copy_private_key` may be defined to copy the SSH private key as well as authorising the public key.
+`provision_copy_private_key` may be defined to copy the SSH private key as well as authorising the public key.
 
 Requirements
 ------------

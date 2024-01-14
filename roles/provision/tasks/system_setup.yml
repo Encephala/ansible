@@ -15,16 +15,23 @@
       - htop
       - fzf
       - bc
+    state: present
+
+- name: Install desktop packages
+  ansible.builtin.apt:
+    name:
       - gcc # For vim treesitter
       - npm # For many vim LSPs
       - r-base # For R LSP
       - libxml2-dev # For R LSP
       - luarocks # For lua LSP
       - python3-venv # For some vim LSPs
+      - pipx
     state: present
+  when: provision_is_desktop | bool
 
 # TODO: This doesn't make sense, NVim gets installed globally,
-# but relies on rust which gets installed for the {{ username }}
+# but relies on rust which gets installed for the {{ provision_username }}
 # - name: Run rustup
 #  ansible.builtin.shell: curl https://sh.rustup.rs -sSf | sh -s -- -y
 
@@ -62,13 +69,13 @@
     name:
       - qemu-guest-agent
     state: present
-  when: is_vm | bool
+  when: provision_is_vm | bool
   notify: Ensure guest agent enabled
 
 - name: Set hostname for VM if provided
   ansible.builtin.hostname:
     name: "{{ hostname }}"
-  when: hostname is defined and is_vm | bool
+  when: hostname is defined and provision_is_vm | bool
 
 - name: Set timezone to Amsterdam
   community.general.timezone:
@@ -91,7 +98,7 @@
     mode: "0644"
     owner: root
     group: root
-  when: is_wsl
+  when: provision_is_desktop | bool
 
 - name: Check if reboot required
   ansible.builtin.stat:

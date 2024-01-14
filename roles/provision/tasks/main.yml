@@ -18,30 +18,31 @@
   tags:
     - always
 
-- name: Update `username` if not root
+# TBH I don't know why this is necessary anymore
+- name: Update `provision_username` if not root
   ansible.builtin.set_fact:
-    username: "{{ ansible_user_id }}"
+    provision_username: "{{ ansible_user_id }}"
   when: ansible_user_id != "root"
   tags:
     - always
 
 - name: Set user and group id
   ansible.builtin.set_fact:
-    uid: "{{ getent_passwd[username].1 }}"
-    gid: "{{ getent_passwd[username].2 }}"
-    home: "{{ getent_passwd[username].4 }}"
+    uid: "{{ getent_passwd[provision_username].1 }}"
+    gid: "{{ getent_passwd[provision_username].2 }}"
+    home: "{{ getent_passwd[provision_username].4 }}"
   tags:
     - always
 
 
 - name: Include ssh setup
   ansible.builtin.import_tasks: ssh_setup.yml
-  remote_user: "{{ username }}"
+  remote_user: "{{ provision_username }}"
   tags:
     - ssh
 
 - name: Include dotfiles setup
   ansible.builtin.import_tasks: dotfiles.yml
-  remote_user: "{{ username }}"
+  remote_user: "{{ provision_username }}"
   tags:
     - dotfiles

@@ -7,10 +7,9 @@
 
   vars:
     # gotify_token: "{{ gotify_x_token }}"
-    # is_vm: true
-    # is_wsl: true
+    # provision_is_vm: true
+    # provision_is_desktop: true
     # hostname: Dockerhost
-    ansible_user: root
 
   roles:
     - provision

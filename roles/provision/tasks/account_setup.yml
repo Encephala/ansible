@@ -1,16 +1,16 @@
 ---
 - name: Create group for user
   ansible.builtin.group:
-    name: "{{ username }}"
+    name: "{{ provision_username }}"
     state: present
 
-- name: Create user {{ username }}
+- name: Create user {{ provision_username }}
   ansible.builtin.user:
     state: present
-    name: "{{ username }}"
-    group: "{{ username }}"
+    name: "{{ provision_username }}"
+    group: "{{ provision_username }}"
     groups: sudo
     append: true
     shell: /bin/bash
-    password: "{{ userpass | mandatory | password_hash('sha512') }}" # noqa: jinja[invalid]
+    password: "{{ provision_userpass | mandatory | password_hash('sha512') }}"
     update_password: on_create

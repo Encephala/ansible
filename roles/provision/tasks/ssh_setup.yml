@@ -1,24 +1,24 @@
 ---
 # Tasks to copy SSH ID, disable password auth and restart sshd
-# Must be run as root, requires var `username` to be set
-# If copy_private_key is true, also copies the private key
+# Must be run as root, requires var `provision_username` to be set
+# If provision_copy_private_key is true, also copies the private key
 
 - name: Authorise SSH key
   ansible.posix.authorized_key:
-    user: "{{ username }}"
+    user: "{{ provision_username }}"
     key: "{{ lookup('ansible.builtin.file', 'ssh/' + filename) }}"
   vars:
-    filename: "{{ lookup('ansible.builtin.vars', 'ssh_key_pub') }}"
+    filename: "{{ lookup('ansible.builtin.vars', 'provision_ssh_key_pub') }}"
 
 # authorized_key ensures the directory is created
 - name: Copy SSH private key
   ansible.builtin.copy:
-    src: "ssh/{{ ssh_key }}"
-    dest: "{{ home }}/.ssh/{{ ssh_key }}"
+    src: "ssh/{{ provision_ssh_key }}"
+    dest: "{{ home }}/.ssh/{{ provision_ssh_key }}"
     mode: "0600"
     owner: "{{ uid }}"
     group: "{{ gid }}"
-  when: copy_private_key | bool
+  when: provision_copy_private_key | bool
 
 
 - name: Harden SSH
@@ -34,3 +34,4 @@
   loop_control:
     loop_var: line
   notify: Restart sshd
+  when: not (provision_is_desktop | bool)

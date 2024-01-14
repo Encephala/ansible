@@ -1,12 +1,10 @@
 ---
 # defaults file for provision
-is_vm: false
+provision_is_vm: false
 
-is_wsl: false
+provision_is_desktop: false
 
-# Username of generic user
-username: jonathan
+provision_ssh_key: id_ed25519
+provision_ssh_key_pub: id_ed25519.pub
 
-ssh_key: id_ed25519
-ssh_key_pub: id_ed25519.pub
-copy_private_key: false
+provision_copy_private_key: "{{ not provision_is_desktop }}"
