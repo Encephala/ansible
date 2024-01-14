@@ -8,12 +8,36 @@
     group: "{{ gid }}"
     mode: "0755"
 
-- name: Clone kickstart.nvim
-  ansible.builtin.git:
-    repo: "https://github.com/encephala/kickstart.nvim.git"
+- name: Ensure nvim exists in .config
+  ansible.builtin.file:
     dest: "{{ home }}/.config/nvim"
-  become: true
-  become_user: "{{ provision_username }}"
+    state: directory
+    owner: "{{ uid }}"
+    group: "{{ gid }}"
+    mode: "0755"
+
+- name: Copy kickstart.nvim dependencies
+  ansible.builtin.copy:
+    src: kickstart.nvim/lua
+    dest: "{{ home }}/.config/nvim/"
+    owner: "{{ uid }}"
+    group: "{{ gid }}"
+    mode: "0755"
+
+- name: Copy init.lua
+  ansible.builtin.template:
+    src: kickstart.nvim/init.lua.j2
+    dest: "{{ home }}/.config/nvim/init.lua"
+    owner: "{{ uid }}"
+    group: "{{ gid }}"
+    mode: "0644"
+
+# - name: Clone kickstart.nvim
+#   ansible.builtin.git:
+#     repo: "https://github.com/encephala/kickstart.nvim.git"
+#     dest: "{{ home }}/.config/nvim"
+#   become: true
+#   become_user: "{{ provision_username }}"
 
 - name: Run kickstart.nvim setup
   ansible.builtin.command:

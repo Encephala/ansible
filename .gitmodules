@@ -1,0 +1,3 @@
+[submodule "roles/provision/files/kickstart.nvim"]
+    path = roles/provision/files/kickstart.nvim
+    url = git@github.com:encephala/kickstart.nvim
