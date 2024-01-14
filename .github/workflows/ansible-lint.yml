@@ -20,5 +20,8 @@ jobs:
       - name: Add pip bin to path
         run: echo "$HOME/.local/bin" >> $GITHUB_PATH
 
+      - name: Create vault password file
+        run: echo "${{ secrets.ANSIBLE_VAULT_PASSWORD }}" > vault_pass && chmod go-rwx vault_pass
+
       - name: Run ansible-lint
         run: ansible-lint 2>&1 >> $GITHUB_STEP_SUMMARY
