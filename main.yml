@@ -10,6 +10,7 @@
     # provision_is_vm: true
     # provision_is_desktop: true
     # hostname: Dockerhost
+    ansible_user: root
 
   roles:
     - provision
