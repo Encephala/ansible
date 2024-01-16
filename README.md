@@ -21,6 +21,6 @@ notification through my Gotify server.
 ## TODO
 
 - Fix rustup install
-- Separate provision into server and desktop
-- Add .mdlrc to dotfiles
-- Add yamllint config to dotfiles
+- Fix neovim install
+  - The mv command doesn't actually check move
+  a new version because the dest file exists
