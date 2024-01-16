@@ -7,4 +7,4 @@ provision_is_desktop: false
 provision_ssh_key: id_ed25519
 provision_ssh_key_pub: id_ed25519.pub
 
-provision_copy_private_key: "{{ not provision_is_desktop }}"
+provision_copy_ssh_key: "{{ provision_is_desktop }}"

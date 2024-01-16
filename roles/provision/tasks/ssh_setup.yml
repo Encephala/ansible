@@ -13,12 +13,15 @@
 # authorized_key ensures the directory is created
 - name: Copy SSH private key
   ansible.builtin.copy:
-    src: "ssh/{{ provision_ssh_key }}"
-    dest: "{{ home }}/.ssh/{{ provision_ssh_key }}"
-    mode: "0600"
+    src: "ssh/{{ item.file }}"
+    dest: "{{ home }}/.ssh/{{ item.file }}"
+    mode: "{{ item.mode }}"
     owner: "{{ uid }}"
     group: "{{ gid }}"
-  when: provision_copy_private_key | bool
+  when: provision_copy_ssh_key | bool
+  with_items:
+    - { file: "{{ provision_ssh_key }}", mode: "0600" }
+    - { file: "{{ provision_ssh_key }}.pub", mode: "0644" }
 
 
 - name: Harden SSH
