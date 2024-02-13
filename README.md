@@ -24,3 +24,4 @@ notification through my Gotify server.
 - Fix neovim install
   - The mv command doesn't actually check move
   a new version because the dest file exists
+- Make provision install R languageserver
