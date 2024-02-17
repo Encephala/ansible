@@ -84,7 +84,6 @@
           export GIT_PS1_SHOWSTASHSTATE=1
           export GIT_PS1_SHOWUNTRACKEDFILES=1
           export GIT_PS1_SHOWUPSTREAM=1
-          export PS2="\[\e[38;5;204m\]>\[\e[00m\] "
 
           # Set PS1
           # Function needed to dynamically set exit code
@@ -104,6 +103,7 @@
             fi
 
             PS1="$PS1 $GREEN\H \A $BLUE\w$BRIGHT_PINK\$(__git_ps1)\n$GREEN>$NORMAL "
+            PS2="$BRIGHT_PINK>$NORMAL "
           }
 
           export PROMPT_COMMAND=__prompt_command
