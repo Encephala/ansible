@@ -1,5 +1,4 @@
 ---
-# Set up git branch name in PS1 through bashrc
 - name: Ensure .config exists in home
   ansible.builtin.file:
     dest: "{{ home }}/.config"
