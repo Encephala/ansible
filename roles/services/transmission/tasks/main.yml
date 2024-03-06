@@ -1,13 +1,6 @@
 ---
-- name: Install desktop
-  ansible.builtin.apt:
-    name:
-      - xfce4
-  notify: Reboot
-
 - name: Configure big-store mount
   block:
-    # Change to geerlingguy.nfs?
     - name: Ensure NFS dependencies are present
       ansible.builtin.apt:
         name:
@@ -16,18 +9,10 @@
     - name: Mount big-store for downloads
       ansible.posix.mount:
         path: /mnt/big-store
-        src: "{{ hostvars.JFM.ansible_host }}:/big-store/transmission"
+        src: "{{ hostvars.jfm.ansible_host }}:/mnt/big-store/transmission-downloads"
         opts: defaults
         fstype: nfs
         state: mounted
-
-    - name: Create symlink to big-store
-      ansible.builtin.file:
-        src: "/mnt/big-store"
-        dest: "{{ ansible_env.HOME }}/{{ big_store_symlink_name }}"
-        state: link
-        owner: "{{ username }}"
-        group: "{{ username }}"
 
 
 - name: Set up Transmission
@@ -35,30 +20,24 @@
     - name: Install Transmission client
       ansible.builtin.apt:
         name:
-          - transmission
-
-    - name: Configure Transmission desktop shortcut
-      ansible.builtin.copy:
-        remote_src: true
-        src: "/usr/share/applications/transmission-gtk.desktop"
-        dest: "{{ ansible_env.HOME }}/Desktop/"
-        mode: "0755"
-
-    - name: Create Transmission config directory
-      ansible.builtin.file:
-        state: directory
-        path: "{{ ansible_env.HOME }}/.config/transmission/"
-        owner: "{{ username }}"
-        group: "{{ username }}"
-        mode: "0755"
+          - transmission-daemon
 
     - name: Configure Transmission
       ansible.builtin.template:
         src: settings.j2
-        dest: "{{ ansible_env.HOME }}/.config/transmission/settings.json"
-        owner: "{{ username }}"
-        group: "{{ username }}"
+        dest: "/var/lib/transmission-daemon/.config/transmission-daemon/settings.json"
+        owner: "105"
+        group: "112"
         mode: "0600"
+      register: transmission_config
+
+
+    - name: Reload Transmission
+      ansible.builtin.service:
+        name: transmission-daemon
+        state: reloaded
+        enabled: yes
+      when: transmission_config.changed
 
 
 - name: Configure Gotify notification
@@ -72,18 +51,50 @@
     - name: Copy notification script
       ansible.builtin.template:
         src: script.j2
-        dest: "{{ ansible_env.HOME }}/notify"
+        dest: "/usr/local/bin/notify"
         mode: "0755"
-        owner: "{{ username }}"
-        group: "{{ username }}"
+        owner: root
+        group: root
 
 - name: Set up firewall
-  ansible.builtin.include_role:
-    name: geerlingguy.firewall
-  vars:
-    firewall_allowed_udp_ports:
-      - "8080" # Allow RPC over UDP
-    firewall_allowed_tcp_ports:
-      - "22"
-      - "8080" # Allow RPC over TCP
-      - "51413" # Allow torrent peer connections
+  block:
+    - name: Install iptables
+      ansible.builtin.apt:
+        name:
+          - firewalld
+
+    - name: Enable firewalld
+      ansible.builtin.service:
+        name: firewalld
+        state: started
+        enabled: yes
+
+    - name: Allow services through firewalld
+      ansible.builtin.firewalld:
+        state: enabled
+        service: "{{ item }}"
+        permanent: true
+        immediate: true
+      with_items:
+        - transmission-client
+        - nfs
+        - nfs3
+        - rpc-bind
+        - wireguard
+
+    - name: Allow webinterface through firewalld
+      ansible.builtin.firewalld:
+        state: enabled
+        port: "8080/tcp"
+        permanent: true
+        immediate: true
+
+    - name: Allow Transmission peer ports through firewalld
+      ansible.builtin.firewalld:
+        state: enabled
+        port: "{{ item }}"
+        permanent: true
+        immediate: true
+      with_items:
+       - 51413/tcp
+       - 51413/udp

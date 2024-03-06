@@ -11,7 +11,7 @@ and creates a symbolic link to the mount in the user's home directory.
 Variables
 ------------
 
-`big_store_symlink_name=Torrent`.
+None
 
 Requirements
 ------------
@@ -21,9 +21,9 @@ Must be run as root or using `become`.
 Dependencies
 ------------
 
-Role `geerlingguy.firewall` must be present.
+None
 
 Todo
 ------------
 
-- More robust/general mounting
+- Just use iptables because idfk how firewalld works and I don't want to learn it
