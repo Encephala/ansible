@@ -27,3 +27,4 @@ Todo
 ------------
 
 - Just use iptables because idfk how firewalld works and I don't want to learn it
+- Install and enable clamscan?
