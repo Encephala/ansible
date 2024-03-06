@@ -96,6 +96,7 @@
             local BRIGHT_PINK='\[\e[38;5;204m\]'
             local NORMAL='\[\e[0m\]'
 
+            # prefix PS1 with last exit code
             if [ $EXIT_CODE == 0 ]; then
               PS1="$GREEN$EXIT_CODE"
             else
@@ -103,6 +104,12 @@
             fi
 
             PS1="$PS1 $GREEN\H \A $BLUE\w$BRIGHT_PINK\$(__git_ps1)\n$GREEN>$NORMAL "
+
+            # prefix PS1 with python venv
+            if [ -n "${VIRTUAL_ENV}" ] && [ -z "${VIRTUAL_ENV_DISABLE_PROMPT:-}" ]; then
+              PS1="($(basename $VIRTUAL_ENV)) $PS1"
+            fi
+
             PS2="$BRIGHT_PINK>$NORMAL "
           }
 
