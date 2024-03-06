@@ -25,3 +25,13 @@ notification through my Gotify server.
   - The mv command doesn't actually check move
   a new version because the dest file exists
 - Make provision install R languageserver
+
+## Installing Ansible with pipx
+
+Leaving this here for future me
+
+```bash
+pipx install --include-deps ansible
+pipx inject ansible passlib
+pipx inject ansible ansible-lint --include-apps
+```
