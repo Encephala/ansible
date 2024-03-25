@@ -1,1 +1,7 @@
 alias gitlog="git log --oneline -n10"
+
+cdgr() {
+	local root
+	root=$(git rev-parse --show-toplevel) || return $?
+	cd $root || return $?
+}
