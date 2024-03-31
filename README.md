@@ -25,6 +25,7 @@ notification through my Gotify server.
   - The mv command doesn't actually check move
   a new version because the dest file exists
 - Make provision install R languageserver
+- Make provision not install all LSPs for nvim when not `is_desktop`
 
 ## Installing Ansible with pipx
 
