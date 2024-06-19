@@ -27,6 +27,7 @@
     name:
       - r-base # For R LSP
       - libxml2-dev # For R LSP
+      - xclip # For neovim to yank to system clipboard
       - pipx
     state: present
   when: provision_is_desktop | bool
