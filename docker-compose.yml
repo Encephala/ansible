@@ -1,0 +1,10 @@
+services:
+  test:
+    build: .
+
+    volumes:
+      - .:/ansible
+
+    stdin_open: true
+    tty: true
+    entrypoint: /bin/bash
