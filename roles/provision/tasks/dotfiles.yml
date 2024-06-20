@@ -31,95 +31,48 @@
     group: "{{ gid }}"
     mode: "0644"
 
-# - name: Clone kickstart.nvim
-#   ansible.builtin.git:
-#     repo: "https://github.com/encephala/kickstart.nvim.git"
-#     dest: "{{ home }}/.config/nvim"
-#   become: true
-#   become_user: "{{ provision_username }}"
-
 - name: Run kickstart.nvim setup
   ansible.builtin.command:
     cmd: nvim --headless "+Lazy! sync" +qa
     creates: "{{ home }}/.local/share/nvim/"
 
 
-- name: Bash
-  when: ansible_user_shell == "/bin/bash"
-  block:
-    - name: Set long bash history
-      ansible.builtin.lineinfile:
-        path: "{{ home }}/.bashrc"
-        regexp: "{{ item.find }}"
-        line: "{{ item.line }}"
-      loop:
-        - { find: "^HISTSIZE=*", line: "HISTSIZE=5000" }
-        - { find: "^HISTFILESIZE=*", line: "HISTFILESIZE=10000" }
+- name: Install ohmyzsh
+  ansible.builtin.shell:
+    # Yoinked from https://github.com/ThePrimeagen/ansible/blob/master/tasks/zsh-setup.yml
+    cmd: curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh > /tmp/oh-my-installer && chmod +x /tmp/oh-my-installer && /tmp/oh-my-installer
+    creates: "{{ home }}/.oh-my-zsh"
 
-    - name: Add aliases
-      ansible.builtin.copy:
-        src: bash/dotbash_aliases
-        dest: "{{ home }}/.bash_aliases"
-        owner: "{{ uid }}"
-        group: "{{ gid }}"
-        mode: "0644"
+# Theme is configured in .zshrc
+- name: Install Alien theme
+  remote_user: "{{ provision_username }}"
+  ansible.builtin.git:
+    repo: git@github.com:eendroroy/alien.git
+    dest: ~/.alien
+    accept_hostkey: true
+    depth: 1
 
-    - name: Git branch in PS1 helper files
-      ansible.builtin.copy:
-        src: git/dotgit/
-        dest: "{{ home }}/.git/"
-        owner: "{{ uid }}"
-        group: "{{ gid }}"
-        mode: "0644"
+- name: Check user's shell
+  ansible.builtin.command: grep "^jonathan.*zsh.*" /etc/passwd
+  register: user_shell
+  changed_when: no
+  failed_when: user_shell.stderr != ""
 
-    - name: Set bash prompt strings
-      ansible.builtin.blockinfile:
-        path: "{{ home }}/.bashrc"
-        block: |
-          # Git stuff
-          . "$HOME/.git/git-completion.bash"
-          . "$HOME/.git/git-prompt.sh"
+- name: Change shell to zsh
+  ansible.builtin.expect:
+    command: chsh -s "/usr/bin/zsh"
+    responses:
+      (?i)password: "{{ provision_userpass }}"
+  when: user_shell.rc != 0
 
-          export GIT_PS1_SHOWDIRTYSTATE=1
-          export GIT_PS1_SHOWSTASHSTATE=1
-          export GIT_PS1_SHOWUNTRACKEDFILES=1
-          export GIT_PS1_SHOWUPSTREAM=1
+- name: Copy .zshrc
+  ansible.builtin.template:
+    src: zsh/.zshrc
+    dest: "{{ home }}/.zshrc"
+    owner: "{{ uid }}"
+    group: "{{ gid }}"
+    mode: "0644"
 
-          # Set PS1
-          # Function needed to dynamically set exit code
-          __prompt_command() {
-            local EXIT_CODE="$?"
-
-            local GREEN='\[\e[01;32m\]'
-            local RED='\[\e[01;31m\]'
-            local BLUE='\[\e[01;34m\]'
-            local BRIGHT_PINK='\[\e[38;5;204m\]'
-            local NORMAL='\[\e[0m\]'
-
-            # prefix PS1 with last exit code
-            if [ $EXIT_CODE == 0 ]; then
-              PS1="$GREEN$EXIT_CODE"
-            else
-              PS1="$RED$EXIT_CODE"
-            fi
-
-            PS1="$PS1 $GREEN\H \A $BLUE\w$BRIGHT_PINK\$(__git_ps1)\n$GREEN>$NORMAL "
-
-            # prefix PS1 with python venv
-            if [ -n "${VIRTUAL_ENV}" ] && [ -z "${VIRTUAL_ENV_DISABLE_PROMPT:-}" ]; then
-              PS1="($(basename $VIRTUAL_ENV)) $PS1"
-            fi
-
-            PS2="$BRIGHT_PINK>$NORMAL "
-          }
-
-          export PROMPT_COMMAND=__prompt_command
-
-    - name: Set editor to vim
-      ansible.builtin.lineinfile:
-        path: "{{ home }}/.bashrc"
-        regexp: "^export EDITOR=*"
-        line: "export EDITOR=vim"
 
 
 - name: Copy .gitconfig
@@ -155,14 +108,6 @@
         owner: "{{ uid }}"
         group: "{{ gid }}"
         mode: "0644"
-
-- name: Copy .zshrc
-  ansible.builtin.template:
-    src: zsh/dotzshrc.j2
-    dest: "{{ home }}/.zshrc"
-    owner: "{{ uid }}"
-    group: "{{ gid }}"
-    mode: "0644"
 
 - name: Markdown Lint
   block:
