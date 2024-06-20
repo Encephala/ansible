@@ -47,7 +47,7 @@
 - name: Install Alien theme
   remote_user: "{{ provision_username }}"
   ansible.builtin.git:
-    repo: https://github.com/eendroroy/alien.git
+    repo: https://github.com/Encephala/alien.git
     dest: ~/.alien
     accept_hostkey: true
     depth: 1
