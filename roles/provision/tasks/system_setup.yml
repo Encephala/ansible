@@ -21,6 +21,7 @@
       - luarocks # For lua LSP
       - python3-venv # For some vim LSPs
       - python3-pexpect # For Ansible's expect module
+      - zsh
     state: present
 
 - name: Install desktop packages
@@ -30,7 +31,6 @@
       - libxml2-dev # For R LSP
       - xclip # For neovim to yank to system clipboard
       - pipx
-      - zsh
     state: present
   when: provision_is_desktop | bool
 

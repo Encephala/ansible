@@ -11,6 +11,6 @@
     group: "{{ provision_username }}"
     groups: sudo
     append: true
-    shell: /bin/bash
+    shell: /usr/bin/zsh
     password: "{{ provision_userpass | mandatory | password_hash('sha512') }}"
     update_password: on_create

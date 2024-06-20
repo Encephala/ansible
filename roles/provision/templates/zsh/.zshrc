@@ -12,9 +12,9 @@ source $HOME/.alien/alien.zsh
 
 export ALIEN_SECTIONS_LEFT=(
     time
-    user
+    ssh
     path
-    version
+    version # I don't know what this does, I'm sure it's cool and I'll magically find out some day
     newline
     venv
     prompt
@@ -38,8 +38,8 @@ export ALIEN_GIT_PUSH_SYM="↑ " # Add space because rendering on right site is 
 # Colours from https://www.color-hex.com/color-palette/59283
 export ALIEN_SECTION_TIME_BG=#FFD6E4
 export ALIEN_SECTION_TIME_FG=8
-export ALIEN_SECTION_USER_BG=#FFFFFF
-export ALIEN_SECTION_USER_FG=8
+export ALIEN_SECTION_SSH_BG=#FFFFFF
+export ALIEN_SECTION_SSH_FG=8
 export ALIEN_SECTION_PATH_BG=#AAFBDC
 export ALIEN_SECTION_PATH_FG=8
 
@@ -151,5 +151,5 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-# Created by `pipx` on 2024-06-20 11:03:53
 export PATH="$PATH:/home/jonathan/.local/bin"
+export EDITOR="vim"
