@@ -2,7 +2,8 @@
 
 My ansible playbooks and roles.
 
-Vault password managed by `vault_pass.py` through the [Bitwarden CLI](https://bitwarden.com/help/cli/).
+~~Vault password managed by `vault_pass.py` through the [Bitwarden CLI](https://bitwarden.com/help/cli/).~~
+Yeah nah that was too much effort, screw typing the password every time.
 
 Only work on Debian(-based) systems.
 
@@ -20,12 +21,8 @@ notification through my Gotify server.
 
 ## TODO
 
-- Fix rustup install
-- Fix neovim install
-  - The mv command doesn't actually check move
-  a new version because the dest file exists
-- Make provision install R languageserver
 - Make provision not install all LSPs for nvim when not `is_desktop`
+- Fix dotfiles to have the option to not install all the bulk that is Cargo (maybe just don't install zoxide xd)
 
 ## Installing Ansible with pipx
 
