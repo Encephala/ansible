@@ -37,12 +37,14 @@
 
 - name: Include ssh setup
   ansible.builtin.import_tasks: ssh_setup.yml
-  remote_user: "{{ provision_username }}"
+  become: true
+  become_user: "{{ provision_username }}"
   tags:
     - ssh
 
 - name: Include dotfiles setup
   ansible.builtin.import_tasks: dotfiles.yml
-  remote_user: "{{ provision_username }}"
+  become: true
+  become_user: "{{ provision_username }}"
   tags:
     - dotfiles
