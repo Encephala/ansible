@@ -34,11 +34,6 @@
     state: present
   when: provision_is_desktop | bool
 
-# TODO: This doesn't make sense, NVim gets installed globally,
-# but relies on rust which gets installed for the {{ provision_username }}
-# - name: Run rustup
-#  ansible.builtin.shell: curl https://sh.rustup.rs -sSf | sh -s -- -y
-
 - name: Download Neovim appimage
   ansible.builtin.get_url:
     url: https://github.com/neovim/neovim/releases/latest/download/nvim.appimage

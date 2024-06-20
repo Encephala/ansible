@@ -48,7 +48,7 @@
   remote_user: "{{ provision_username }}"
   ansible.builtin.git:
     repo: https://github.com/Encephala/alien.git
-    dest: ~/.alien
+    dest: "{{ home }}/.alien"
     accept_hostkey: true
     depth: 1
 
@@ -74,6 +74,18 @@
     mode: "0644"
 
 
+- name: Install rust with Rustup
+  ansible.builtin.shell:
+    cmd: curl https://sh.rustup.rs -sSf | sh -s -- -y
+    creates: "{{ home }}/.cargo"
+
+- name: Install zoxide
+  community.general.cargo:
+    name: zoxide
+    locked: true
+    state: present
+  environment:
+    PATH: "{{ home }}/.cargo/bin:{{ lookup('ansible.builtin.env', 'PATH') }}"
 
 - name: Copy .gitconfig
   ansible.builtin.copy:

@@ -10,4 +10,5 @@ roles:
 
 # List of required collections
 collections:
+  - name: community.general # For cargo
   - name: community.docker
