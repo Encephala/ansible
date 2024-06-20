@@ -12,8 +12,9 @@ source $HOME/.alien/alien.zsh
 
 export ALIEN_SECTIONS_LEFT=(
     time
-    host
+    user
     path
+    version
     newline
     venv
     prompt
@@ -25,6 +26,37 @@ export ALIEN_SECTIONS_RIGHT=(
     vcs_status
     vcs_dirty
 )
+
+export ALIEN_SECTION_TIME_FORMAT="%H:%M:%S"
+
+export ALIEN_GIT_STASH_SYM="\\$"
+export ALIEN_GIT_SYM=""
+export ALIEN_HG_SYM=""
+export ALIEN_SVN_SYM=""
+export ALIEN_GIT_PUSH_SYM="↑ " # Add space because rendering on right site is janky otherwise
+
+# Colours from https://www.color-hex.com/color-palette/59283
+export ALIEN_SECTION_TIME_BG=#FFD6E4
+export ALIEN_SECTION_TIME_FG=8
+export ALIEN_SECTION_USER_BG=#FFFFFF
+export ALIEN_SECTION_USER_FG=8
+export ALIEN_SECTION_PATH_BG=#AAFBDC
+export ALIEN_SECTION_PATH_FG=8
+
+export ALIEN_SECTION_EXIT_BG=$ALIEN_SECTION_PATH_BG
+export ALIEN_SECTION_EXIT_BG_ERROR=126
+export ALIEN_SECTION_EXIT_FG=7
+export ALIEN_SECTION_VCS_BRANCH_BG=$ALIEN_SECTION_PATH_BG
+export ALIEN_SECTION_VCS_BRANCH_FG=$ALIEN_SECTION_PATH_FG
+export ALIEN_SECTION_VCS_STATUS_BG=$ALIEN_SECTION_USER_BG
+export ALIEN_SECTION_VCS_STATUS_FG=$ALIEN_SECTION_USER_FG
+export ALIEN_SECTION_VCS_DIRTY_BG=$ALIEN_SECTION_TIME_BG
+export ALIEN_SECTION_VCS_DIRTY_FG=$ALIEN_SECTION_TIME_FG
+export ALIEN_GIT_TRACKED_COLOR=10
+export ALIEN_GIT_UN_TRACKED_COLOR=0
+
+export ALIEN_PROMPT_FG=82
+export ALIEN_SECTION_VENV_FG=$ALIEN_PROMPT_FG
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
