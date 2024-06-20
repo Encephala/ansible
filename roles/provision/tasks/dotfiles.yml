@@ -40,7 +40,9 @@
 - name: Install ohmyzsh
   ansible.builtin.shell:
     # Yoinked from https://github.com/ThePrimeagen/ansible/blob/master/tasks/zsh-setup.yml
-    cmd: curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh > /tmp/oh-my-installer && chmod +x /tmp/oh-my-installer && /tmp/oh-my-installer
+    cmd: "curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh > /tmp/oh-my-installer\
+      && chmod +x /tmp/oh-my-installer\
+      && /tmp/oh-my-installer"
     creates: "{{ home }}/.oh-my-zsh"
 
 # Theme is configured in .zshrc
@@ -49,13 +51,12 @@
   ansible.builtin.git:
     repo: https://github.com/Encephala/alien.git
     dest: "{{ home }}/.alien"
-    accept_hostkey: true
     depth: 1
 
 - name: Check user's shell
   ansible.builtin.command: grep "^jonathan.*zsh.*" /etc/passwd
   register: user_shell
-  changed_when: no
+  changed_when: false
   failed_when: user_shell.stderr != ""
 
 - name: Change shell to zsh
@@ -76,7 +77,7 @@
 
 - name: Install rust with Rustup
   ansible.builtin.shell:
-    cmd: curl https://sh.rustup.rs -sSf | sh -s -- -y
+    cmd: set -o pipefail curl https://sh.rustup.rs -sSf | sh -s -- -y
     creates: "{{ home }}/.cargo"
 
 - name: Install zoxide
@@ -86,6 +87,13 @@
     state: present
   environment:
     PATH: "{{ home }}/.cargo/bin:{{ lookup('ansible.builtin.env', 'PATH') }}"
+
+- name: Install diff-so-fancy
+  ansible.builtin.git:
+    repo: https://github.com/so-fancy/diff-so-fancy.git
+    dest: "{{ home }}/.oh-my-zsh/custom/plugins/diff-so-fancy"
+    depth: 1
+
 
 - name: Copy .gitconfig
   ansible.builtin.copy:
