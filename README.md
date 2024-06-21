@@ -21,7 +21,6 @@ notification through my Gotify server.
 
 ## TODO
 
-- Update provision to have characters for Alien VCS_DIRTY section rather than illegible symbols
 - Make provision not install all LSPs for nvim when not `is_desktop`
 - Fix dotfiles to have the option to not install all the bulk that is Cargo (maybe just don't install zoxide xd)
 

@@ -58,6 +58,8 @@ export ALIEN_GIT_UN_TRACKED_COLOR=0
 export ALIEN_PROMPT_FG=82
 export ALIEN_SECTION_VENV_FG=$ALIEN_PROMPT_FG
 
+export ALIEN_GIT_MOD_SYM=✱
+
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
 # a theme from this variable instead of looking in $ZSH/themes/
