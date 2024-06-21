@@ -67,7 +67,7 @@
       ansible.builtin.service:
         name: firewalld
         state: started
-        enabled: yes
+        enabled: true
 
     - name: Allow services through firewalld
       ansible.builtin.firewalld:
@@ -75,7 +75,7 @@
         service: "{{ item }}"
         permanent: true
         immediate: true
-      with_items:
+      loop:
         - transmission-client
         - nfs
         - nfs3
@@ -95,6 +95,6 @@
         port: "{{ item }}"
         permanent: true
         immediate: true
-      with_items:
-       - 51413/tcp
-       - 51413/udp
+      loop:
+        - 51413/tcp
+        - 51413/udp

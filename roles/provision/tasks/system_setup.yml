@@ -15,12 +15,6 @@
       - htop
       - fzf
       - bc
-      - gcc # For vim treesitter
-      - npm # For many vim LSPs
-      - unzip # Also for lemminx (XML LSP)
-      - luarocks # For lua LSP
-      - python3-venv # For some vim LSPs
-      - python3-pexpect # For Ansible's expect module
       - zsh
     state: present
 
@@ -33,6 +27,13 @@
       - pipx
     state: present
   when: provision_is_desktop | bool
+
+- name: Notify if reboot required
+  ansible.builtin.stat:
+    path: /var/run/reboot-required
+  register: reboot_required
+  changed_when: reboot_required.stat.exists
+  notify: Reboot required
 
 - name: Download Neovim appimage
   ansible.builtin.get_url:
@@ -100,10 +101,3 @@
     force: false # Easiest way to allow custom config like memory limit
   when: provision_is_desktop | bool
   notify: Manually configure WSL
-
-- name: Notify if reboot required
-  ansible.builtin.stat:
-    path: /var/run/reboot-required
-  register: reboot_required
-  changed_when: reboot_required.stat.exists
-  notify: Reboot required

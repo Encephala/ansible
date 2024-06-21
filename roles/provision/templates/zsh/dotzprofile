@@ -11,14 +11,17 @@ cdgr() {
     cd $root || return $?
 }
 
+{% if provision_full_setup | bool %}
 # z (zoxide) git root
 zgr() {
     local root
     root=$(git rev-parse --show-toplevel) || return $?
     z $root || return $?
 }
+{% endif %}
 
 # git amend last commit
+# dunno if I want to keep this
 galc() {
     if [ -z $(git status --porcelain) ]
     then

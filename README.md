@@ -21,9 +21,6 @@ notification through my Gotify server.
 
 ## TODO
 
-- Make a variable/tag for a minimal, lightweight install
-  - Make provision not install all LSPs for nvim when not `is_desktop`
-  - Fix dotfiles to have the option to not install all the bulk that is Cargo (maybe just don't install zoxide xd)
 
 ## Installing Ansible with pipx
 

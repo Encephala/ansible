@@ -1,9 +1,16 @@
 ---
-- name: Include system setup
+- name: Include base system setup
   ansible.builtin.import_tasks: system_setup.yml
   become: true
   tags:
     - system
+
+- name: Include full system setup
+  ansible.builtin.import_tasks: system_setup_full.yml
+  become: true
+  tags:
+    - system
+  when: provision_full_setup | bool
 
 - name: Include account setup
   ansible.builtin.import_tasks: account_setup.yml
@@ -19,6 +26,7 @@
     - always
 
 # TBH I don't know why this is necessary anymore
+# Seems a lot like it shouldn't be?
 - name: Update `provision_username` if not root
   ansible.builtin.set_fact:
     provision_username: "{{ ansible_user_id }}"
@@ -48,3 +56,11 @@
   become_user: "{{ provision_username }}"
   tags:
     - dotfiles
+
+- name: Include full dotfiles setup
+  ansible.builtin.import_tasks: dotfiles_full.yml
+  become: true
+  become_user: "{{ provision_username }}"
+  tags:
+    - dotfiles
+  when: provision_full_setup | bool

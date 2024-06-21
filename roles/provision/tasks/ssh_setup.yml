@@ -19,7 +19,7 @@
     owner: "{{ uid }}"
     group: "{{ gid }}"
   when: provision_copy_ssh_key | bool
-  with_items:
+  loop:
     - { file: "{{ provision_ssh_key }}", mode: "0600" }
     - { file: "{{ provision_ssh_key }}.pub", mode: "0644" }
 
@@ -37,4 +37,4 @@
   loop_control:
     loop_var: line
   notify: Restart sshd
-  when: not (provision_is_desktop | bool)
+  when: not(provision_is_desktop | bool)

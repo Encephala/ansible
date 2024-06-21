@@ -1,0 +1,39 @@
+---
+- name: Install rust with Rustup
+  ansible.builtin.shell:
+    cmd: set -o pipefail && curl https://sh.rustup.rs -sSf | sh -s -- -y
+    creates: "{{ home }}/.cargo"
+
+- name: Install zoxide
+  community.general.cargo:
+    name: zoxide
+    locked: true
+    state: present
+  environment:
+    PATH: "{{ home }}/.cargo/bin:{{ lookup('ansible.builtin.env', 'PATH') }}"
+
+- name: Copy .lintr
+  ansible.builtin.copy:
+    src: R/dotlintr
+    dest: "{{ home }}/.lintr"
+    owner: "{{ uid }}"
+    group: "{{ gid }}"
+    mode: "0644"
+
+- name: Yamllint config
+  block:
+    - name: Ensure yamllint config dir exists
+      ansible.builtin.file:
+        path: "{{ home }}/.config/yamllint"
+        state: directory
+        owner: "{{ uid }}"
+        group: "{{ gid }}"
+        mode: "0755"
+
+    - name: Copy yamllint config
+      ansible.builtin.copy:
+        src: yamllint/config
+        dest: "{{ home }}/.config/yamllint/config"
+        owner: "{{ uid }}"
+        group: "{{ gid }}"
+        mode: "0644"

@@ -15,7 +15,7 @@
     group: "{{ gid }}"
     mode: "0755"
 
-- name: Copy kickstart.nvim dependencies
+- name: Copy nvim config dependencies
   ansible.builtin.copy:
     src: kickstart.nvim/lua
     dest: "{{ home }}/.config/nvim/"
@@ -23,7 +23,7 @@
     group: "{{ gid }}"
     mode: "0755"
 
-- name: Copy init.lua
+- name: Copy nvim init.lua
   ansible.builtin.template:
     src: kickstart.nvim/init.lua.j2
     dest: "{{ home }}/.config/nvim/init.lua"
@@ -62,6 +62,7 @@
   changed_when: false
   failed_when: user_shell.stderr != ""
 
+# TODO: I don't like that this depends on a python package, not very minimal
 - name: Change shell to zsh
   ansible.builtin.expect:
     command: chsh -s "/usr/bin/zsh"
@@ -70,29 +71,15 @@
   when: user_shell.rc != 0
 
 - name: Copy .zshrc and .zprofile
-  ansible.builtin.copy:
+  ansible.builtin.template:
     src: "zsh/{{ item.src }}"
     dest: "{{ home }}/{{ item.dest }}"
     owner: "{{ uid }}"
     group: "{{ gid }}"
     mode: "0644"
-  with_items:
+  loop:
     - { src: "dotzshrc", dest: ".zshrc" }
     - { src: "dotzprofile", dest: ".zprofile" }
-
-
-- name: Install rust with Rustup
-  ansible.builtin.shell:
-    cmd: set -o pipefail && curl https://sh.rustup.rs -sSf | sh -s -- -y
-    creates: "{{ home }}/.cargo"
-
-- name: Install zoxide
-  community.general.cargo:
-    name: zoxide
-    locked: true
-    state: present
-  environment:
-    PATH: "{{ home }}/.cargo/bin:{{ lookup('ansible.builtin.env', 'PATH') }}"
 
 - name: Install diff-so-fancy
   ansible.builtin.git:
@@ -108,19 +95,10 @@
     group: "{{ gid }}"
     mode: "0755"
 
-
 - name: Copy .gitconfig
   ansible.builtin.copy:
     src: git/dotgitconfig
     dest: "{{ home }}/.gitconfig"
-    owner: "{{ uid }}"
-    group: "{{ gid }}"
-    mode: "0644"
-
-- name: Copy .lintr
-  ansible.builtin.copy:
-    src: R/dotlintr
-    dest: "{{ home }}/.lintr"
     owner: "{{ uid }}"
     group: "{{ gid }}"
     mode: "0644"
@@ -139,24 +117,6 @@
       ansible.builtin.copy:
         src: ssh/config
         dest: "{{ home }}/.ssh/config"
-        owner: "{{ uid }}"
-        group: "{{ gid }}"
-        mode: "0644"
-
-- name: Yamllint config
-  block:
-    - name: Ensure yamllint config dir exists
-      ansible.builtin.file:
-        path: "{{ home }}/.config/yamllint"
-        state: directory
-        owner: "{{ uid }}"
-        group: "{{ gid }}"
-        mode: "0755"
-
-    - name: Copy yamllint config
-      ansible.builtin.copy:
-        src: yamllint/config
-        dest: "{{ home }}/.config/yamllint/config"
         owner: "{{ uid }}"
         group: "{{ gid }}"
         mode: "0644"
