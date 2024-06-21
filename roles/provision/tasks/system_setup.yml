@@ -73,7 +73,7 @@
 
 - name: Set hostname for VM if provided
   ansible.builtin.hostname:
-    name: "{{ hostname }}"
+    name: "{{ hostname | default(inventory_hostname_short) }}"
   when: hostname is defined and provision_is_vm | bool
 
 - name: Set timezone to Amsterdam
