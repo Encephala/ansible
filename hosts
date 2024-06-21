@@ -1,0 +1,22 @@
+local           ansible_connection=local provision_is_desktop=true
+
+[VM]
+JFM             ansible_host=JFM.home ansible_user=admin
+dockerhost      ansible_host=dockerhost.home
+
+[VM:vars]
+provision_is_vm=true
+
+[container]
+pihole          ansible_host=pihole.home
+npm             ansible_host=npm.home
+gh-runner2      ansible_host=gh-runner2.home
+; transmission    ansible_host=transmission.home
+
+[proxmox:children]
+VM
+container
+
+[proxmox:vars]
+provision_is_desktop=false
+provision_full_setup=true
