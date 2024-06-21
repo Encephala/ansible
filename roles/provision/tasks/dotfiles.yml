@@ -68,14 +68,14 @@
 
 - name: Copy .zshrc and .zprofile
   ansible.builtin.copy:
-    src: "zsh/{{ item }}"
-    dest: "{{ home }}/{{ item }}"
+    src: "zsh/{{ item.src }}"
+    dest: "{{ home }}/{{ item.dest }}"
     owner: "{{ uid }}"
     group: "{{ gid }}"
     mode: "0644"
   with_items:
-    - .zshrc
-    - .zprofile
+    - { src: "dotzshrc", dest: ".zshrc" }
+    - { src: "dotzprofile", dest: ".zprofile" }
 
 
 - name: Install rust with Rustup
