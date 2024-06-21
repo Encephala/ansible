@@ -44,6 +44,9 @@
       && chmod +x /tmp/oh-my-installer\
       && /tmp/oh-my-installer"
     creates: "{{ home }}/.oh-my-zsh"
+  tags:
+    # Because I'm piping curl output to a program, lint doesn't recognize that
+    - skip_ansible_lint
 
 # Theme is configured in .zshrc
 - name: Install Alien theme
