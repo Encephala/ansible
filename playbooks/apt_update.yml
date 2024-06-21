@@ -20,7 +20,7 @@
 
     - name: Upgrade
       ansible.builtin.apt:
-        upgrade: full
+        upgrade: safe
 
     - name: Check if reboot required
       ansible.builtin.stat:
