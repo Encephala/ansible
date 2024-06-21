@@ -97,15 +97,13 @@
     mode: "0644"
     owner: root
     group: root
+    force: false # Easiest way to allow custom config like memory limit
   when: provision_is_desktop | bool
+  notify: Manually configure WSL
 
-- name: Check if reboot required
+- name: Notify if reboot required
   ansible.builtin.stat:
     path: /var/run/reboot-required
   register: reboot_required
-
-- name: Notify reboot required
-  ansible.builtin.assert: { that: true, quiet: true }
-  changed_when: true
+  changed_when: reboot_required.stat.exists
   notify: Reboot required
-  when: reboot_required.stat.exists

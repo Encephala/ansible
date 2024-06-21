@@ -16,4 +16,9 @@
 - name: Reboot required
   ansible.builtin.debug:
     msg: "Reboot required for {{ inventory_hostname }}"
-  when: reboot_required.stat.exists
+  changed_when: true
+
+- name: Manually configure WSL
+  ansible.builtin.debug:
+    msg: "Make sure to manually configure memory in `/etc/wsl.conf` ({{ inventory_hostname }})"
+  changed_when: true

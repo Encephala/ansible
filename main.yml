@@ -3,14 +3,7 @@
   hosts: all
 
   vars_files:
-    secrets.yml
-
-  vars:
-    # gotify_token: "{{ gotify_x_token }}"
-    # provision_is_vm: true
-    # provision_is_desktop: true
-    # hostname: Dockerhost
-    # ansible_user: root
+    - secrets.yml
 
   roles:
     - provision
