@@ -25,7 +25,7 @@
 
 - name: Copy nvim init.lua
   ansible.builtin.template:
-    src: kickstart.nvim/init.lua.j2
+    src: kickstart.nvim/init.lua
     dest: "{{ home }}/.config/nvim/init.lua"
     owner: "{{ uid }}"
     group: "{{ gid }}"
