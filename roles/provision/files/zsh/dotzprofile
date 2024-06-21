@@ -1,13 +1,59 @@
-alias gitlog="git log --oneline -n10"
+# Git aliases
+# git log
+alias gl="git log --oneline -n10"
+# git status
+alias gs="git status"
 
+# CD git root
 cdgr() {
     local root
     root=$(git rev-parse --show-toplevel) || return $?
     cd $root || return $?
 }
 
+# z (zoxide) git root
+zgr() {
+    local root
+    root=$(git rev-parse --show-toplevel) || return $?
+    z $root || return $?
+}
+
+# git amend last commit
+galc() {
+    if [ -z $(git status --porcelain) ]
+    then
+        echo "No changes to be committed"
+        return 0
+    fi
+
+    echo "STATUS:"
+    git status
+    echo
+
+    echo "LATEST COMMITS:"
+    git log --oneline -n 5
+    echo
+
+    read -q "CONFIRM?CONFIRM? [yN] "
+    echo
+    echo
+
+    if [[ $CONFIRM == "y" ]]
+    then
+        echo "COMMITTING:"
+        git add .
+        git commit --amend --no-edit
+    else
+        echo "ABORTING"
+    fi
+}
+
+
+# Cargo aliases
+# cargo test workspace
 alias ctw="cargo test --workspace"
 
+# cargo test package
 ctp() {
     cargo test -p $(echo $1 | tr -d '/') ${@:2}
 }
