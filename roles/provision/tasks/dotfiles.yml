@@ -67,7 +67,7 @@
   when: user_shell.rc != 0
 
 - name: Copy .zshrc and .zprofile
-  ansible.builtin.template:
+  ansible.builtin.copy:
     src: "zsh/{{ item }}"
     dest: "{{ home }}/{{ item }}"
     owner: "{{ uid }}"
@@ -96,6 +96,14 @@
     repo: https://github.com/so-fancy/diff-so-fancy.git
     dest: "{{ home }}/.oh-my-zsh/custom/plugins/diff-so-fancy"
     depth: 1
+
+- name: Install diff-so-fancy helper script
+  ansible.builtin.copy:
+    src: diff-so-fancy/dsf-filter
+    dest: "{{ home }}/.local/bin/"
+    owner: "{{ uid }}"
+    group: "{{ gid }}"
+    mode: "0755"
 
 
 - name: Copy .gitconfig

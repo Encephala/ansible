@@ -1,0 +1,10 @@
+#!/usr/bin/zsh
+
+command -v diff-so-fancy >/dev/null 2>&1
+
+if [[ $? -eq 0 ]] 
+then
+	cat | diff-so-fancy --patch
+else
+	cat
+fi
