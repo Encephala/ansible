@@ -126,7 +126,9 @@ plugins=(per-directory-history zoxide emoji-clock diff-so-fancy)
 plugins=(per-directory-history emoji-clock diff-so-fancy)
 {% endif %}
 
+{% if provision_full_setup | bool %}
 source $HOME/.cargo/env
+{% endif %}
 
 source $ZSH/oh-my-zsh.sh
 
