@@ -21,7 +21,6 @@ notification through my Gotify server.
 
 ## TODO
 
-- Add aliases to zprofile
 - Add diff-so-fancy back to plugins (I thought this wasn't necessary but it is)
 - Update provision to have characters for Alien VCS_DIRTY section rather than illegible symbols
 - Make provision not install all LSPs for nvim when not `is_desktop`

@@ -66,13 +66,16 @@
       (?i)password: "{{ provision_userpass }}"
   when: user_shell.rc != 0
 
-- name: Copy .zshrc
+- name: Copy .zshrc and .zprofile
   ansible.builtin.template:
-    src: zsh/.zshrc
-    dest: "{{ home }}/.zshrc"
+    src: "zsh/{{ item }}"
+    dest: "{{ home }}/{{ item }}"
     owner: "{{ uid }}"
     group: "{{ gid }}"
     mode: "0644"
+  with_items:
+    - .zshrc
+    - .zprofile
 
 
 - name: Install rust with Rustup
