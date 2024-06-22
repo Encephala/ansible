@@ -60,3 +60,12 @@ alias ctw="cargo test --workspace"
 ctp() {
     cargo test -p $(echo $1 | tr -d '/') ${@:2}
 }
+
+# cargo clippy workspace
+alias ccw="cargo clippy --workspace"
+
+# cargo clippy package
+ccp() {
+    cargo clippy -p $(echo $1 | tr -d '/') ${@:2}
+}
+
