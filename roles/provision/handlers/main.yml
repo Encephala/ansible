@@ -20,5 +20,5 @@
 
 - name: Manually configure WSL
   ansible.builtin.debug:
-    msg: "Make sure to manually configure memory in `/etc/wsl.conf` ({{ inventory_hostname }})"
+    msg: "Make sure to manually configure memory in `%userprofile%\\.wslconf` ({{ inventory_hostname }})"
   changed_when: true
