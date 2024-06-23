@@ -3,6 +3,8 @@
 alias gl="git log --oneline -n10"
 # git status
 alias gs="git status"
+# git diff
+alias gd="git diff"
 
 # CD git root
 cdgr() {
