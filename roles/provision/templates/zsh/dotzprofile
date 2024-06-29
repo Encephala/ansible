@@ -5,7 +5,9 @@ alias gd="git diff"
 alias gdc="git diff --cached"
 alias gp="git push"
 alias gr="git restore"
-alias gane="git commit --amend --no-edit"
+alias ga="git add"
+alias gc="git commit"
+alias gcan="git commit --amend --no-edit"
 
 # CD git root
 cdgr() {
