@@ -1,7 +1,7 @@
 ---
 - name: Install rust with Rustup
   ansible.builtin.shell:
-    cmd: set -o pipefail && curl https://sh.rustup.rs -sSf | sh -s -- -y
+    cmd: curl https://sh.rustup.rs -sSf | sh -s -- -y
     creates: "{{ home }}/.cargo"
 
 - name: Install zoxide

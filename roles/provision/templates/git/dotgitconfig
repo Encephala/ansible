@@ -1,6 +1,7 @@
 [user]
 	email = jonathan_rietveld@hotmail.com
 	name = Encephala
+	signingkey = "{{ home }}/.ssh/id_ed25519.pub"
 [init]
 	defaultBranch = main
 [core]
@@ -8,3 +9,7 @@
 	pager = "command -v diff-so-fancy >/dev/null 2>&1 && diff-so-fancy | less --tabs=4 -RF || less"
 [interactive]
 	diffFilter = "dsf-filter"
+[gpg]
+	format = ssh
+[commit]
+	gpgsign = true

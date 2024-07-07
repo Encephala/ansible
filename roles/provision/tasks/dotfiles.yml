@@ -96,7 +96,7 @@
     mode: "0755"
 
 - name: Copy .gitconfig
-  ansible.builtin.copy:
+  ansible.builtin.template:
     src: git/dotgitconfig
     dest: "{{ home }}/.gitconfig"
     owner: "{{ uid }}"
