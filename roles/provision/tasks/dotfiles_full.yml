@@ -3,6 +3,8 @@
   ansible.builtin.shell:
     cmd: curl https://sh.rustup.rs -sSf | sh -s -- -y
     creates: "{{ home }}/.cargo"
+  tags:
+    - skip_ansible_lint
 
 - name: Install zoxide
   community.general.cargo:
