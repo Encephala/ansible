@@ -16,6 +16,7 @@
       - fzf
       - bc
       - zsh
+      - jq
     state: present
 
 - name: Install desktop packages
