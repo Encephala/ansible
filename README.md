@@ -22,7 +22,6 @@ notification through my Gotify server.
 ## TODO
 
 - Installing Golang
-- Figure out why templating isn't respecting `provision_is_desktop`
 
 ## Installing Ansible with pipx
 
