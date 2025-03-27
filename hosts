@@ -12,6 +12,7 @@ pihole          ansible_host=pihole.home
 npm             ansible_host=npm.home
 gh-runner2      ansible_host=gh-runner2.home
 ; transmission    ansible_host=transmission.home
+minecraft       ansible_host=minecraft.home
 
 [proxmox:children]
 VM
