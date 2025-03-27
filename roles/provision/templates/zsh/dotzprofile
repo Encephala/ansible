@@ -3,7 +3,7 @@ alias gl="git log --oneline -n10"
 alias gs="git status"
 alias gd="git diff"
 alias gdc="git diff --cached"
-alias gp="git push"
+alias gp="git push --all"
 alias gr="git reset"
 alias ga="git add"
 alias gc="git commit"
@@ -42,4 +42,3 @@ alias ccw="cargo clippy --workspace"
 ccp() {
     cargo clippy -p $(echo $1 | tr -d '/') ${@:2}
 }
-
